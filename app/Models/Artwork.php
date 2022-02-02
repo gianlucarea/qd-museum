@@ -16,7 +16,7 @@ class Artwork extends Model
      */
     protected $fillable = [
         'title',
-        'museum_id',
+        'room_id',
         'year',
         'technique',
         'dimension',
@@ -39,4 +39,16 @@ class Artwork extends Model
      */
     protected $casts = [
     ];
+
+    public function room(){
+        return $this->belongsTo(Room::class);
+    }
+
+    public function artwork_review(){
+        return $this->hasMany(Artwork_Review::class);
+    }
+
+    public function artwork_tag(){
+        return $this->hasOne(Artwork_Tag::class);
+    }
 }

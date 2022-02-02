@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Artwork_Review extends Model
+class Ticket extends Model
 {
-    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -15,11 +14,8 @@ class Artwork_Review extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'artwork_id',
-        'user_id',
-        'review_title',
-        'review_text',
-        'stars',
+        'museum_id',
+        'number'
     ];
 
     /**
@@ -37,11 +33,10 @@ class Artwork_Review extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'review_date' => 'datetime',
     ];
 
-    public function artwork(){
-        return $this->belongsTo(Artwork::class);
+    public function museum(){
+        return $this->belongsTo(Museum::class);
     }
 
     public function user(){

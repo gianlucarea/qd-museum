@@ -39,4 +39,12 @@ class Museum_Review extends Model
     protected $casts = [
         'review_date' => 'datetime',
     ];
+
+    public function museum(){
+        return $this->belongsTo(Museum::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

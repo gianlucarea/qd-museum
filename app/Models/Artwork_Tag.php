@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Artwork_Review extends Model
+class Artwork_Tag extends Model
 {
     use HasFactory;
 
@@ -16,10 +16,7 @@ class Artwork_Review extends Model
      */
     protected $fillable = [
         'artwork_id',
-        'user_id',
-        'review_title',
-        'review_text',
-        'stars',
+        'code',
     ];
 
     /**
@@ -37,14 +34,9 @@ class Artwork_Review extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'review_date' => 'datetime',
     ];
 
     public function artwork(){
         return $this->belongsTo(Artwork::class);
-    }
-
-    public function user(){
-        return $this->belongsTo(User::class);
     }
 }

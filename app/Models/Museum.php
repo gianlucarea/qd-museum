@@ -35,5 +35,13 @@ class Museum extends Model
      */
     protected $casts = [
     ];
+
+    public function room(){
+        return $this->hasMany(Room::class);
+    }
+
+    public function ticket(){
+        return $this->hasMany(Ticket::class);
+    }
 }
 
