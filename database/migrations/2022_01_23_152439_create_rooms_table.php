@@ -15,11 +15,23 @@ class CreateRoomsTable extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('museum')->constrained();
+            $table->foreignId('museum_id')->constrained();
             $table->integer('height');
             $table->integer('width');
             $table->integer('length');
         });
+
+        DB::table('rooms')->insert([
+            ['museum_id' => '1' , 'height' => '5','width'=>'50','length'=>'50' ],
+            ['museum_id' => '1' , 'height' => '6','width'=>'50','length'=>'50' ],
+            ['museum_id' => '1' , 'height' => '7','width'=>'50','length'=>'50' ],
+            ['museum_id' => '2' , 'height' => '5','width'=>'50','length'=>'50' ],
+            ['museum_id' => '2' , 'height' => '5','width'=>'50','length'=>'50' ],
+            ['museum_id' => '2' , 'height' => '5','width'=>'50','length'=>'50' ],
+            ['museum_id' => '3' , 'height' => '5','width'=>'50','length'=>'50' ],
+            ['museum_id' => '3' , 'height' => '5','width'=>'50','length'=>'50' ],
+            ['museum_id' => '3' , 'height' => '5','width'=>'50','length'=>'50' ],
+        ]);
     }
 
     /**
