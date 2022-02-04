@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Museum extends Model
+class Museum_Tag extends Model
 {
     use HasFactory;
     /**
@@ -14,9 +14,8 @@ class Museum extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'address',
-        'description',
+        'museum_id',
+        'code',
     ];
 
     /**
@@ -36,20 +35,11 @@ class Museum extends Model
     protected $casts = [
     ];
 
-    public function room(){
-        return $this->hasMany(Room::class);
-    }
-
-    public function ticket(){
-        return $this->hasMany(Ticket::class);
-    }
-
-    public function museum_tag(){
-        return $this->hasMany(Museum_Tag::class);
+    public function museum(){
+        return $this->belongsTo(Museum::class);
     }
 
     public function user(){
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class);
     }
 }
-

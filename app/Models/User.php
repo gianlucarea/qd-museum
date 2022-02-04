@@ -54,4 +54,13 @@ class User extends Authenticatable
     public function ticket(){
         return $this->hasMany(Ticket::class);
     }
+
+    public function museum_tag(){
+        return $this->belongsToMany(Museum_Tag::class);
+    }
+
+    public function museum(){
+        return $this->belongsToMany(Museum::class);
+    }
+
 }
