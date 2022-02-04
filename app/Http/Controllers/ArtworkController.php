@@ -8,10 +8,9 @@ use App\Models\Artwork;
 class ArtworkController extends Controller
 {
 
-    public static function addArtwork($id, Request $request){
-        request->$validate([
-            ''
-        ]);
-    }
+    //request->$validate([
+    //''
+    //]);
+    //mi dava errore, non so perché
 
 }

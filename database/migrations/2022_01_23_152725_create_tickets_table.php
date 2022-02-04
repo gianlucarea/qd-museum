@@ -17,7 +17,8 @@ class CreateTicketsTable extends Migration
             $table->id();
             $table->foreignId('museum_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->string('number');
+            $table->date('visit_date');
+            $table->integer('time_slot_number');
         });
     }
 

@@ -15,7 +15,9 @@ class Ticket extends Model
      */
     protected $fillable = [
         'museum_id',
-        'number'
+        'number',
+        'visit_date',
+        'time_slot_number'
     ];
 
     /**

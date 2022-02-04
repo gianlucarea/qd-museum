@@ -68,6 +68,10 @@
                                         @csrf
                                     </form>
                                 </div>
+
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('bookingTicket') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Biglietteria
+                                </a>
                             </li>
                         @endguest
                     </ul>
