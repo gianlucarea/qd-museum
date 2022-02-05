@@ -10,11 +10,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -68,10 +69,16 @@
                                         @csrf
                                     </form>
                                 </div>
-
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('bookingTicket') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Biglietteria
-                                </a>
+                                @if(Auth::user()->role == 1)
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('bookingTicket') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Biglietteria
+                                    </a>
+                                @endif
+                                @if(Auth::user()->role == 2)
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('ticketValidator') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Validazione biglietti
+                                    </a>
+                                @endif
                             </li>
                         @endguest
                     </ul>

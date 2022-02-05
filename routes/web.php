@@ -22,4 +22,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/museum/', [App\Http\Controllers\MuseumController::class, 'addMuseum'])->name('addMuseum');
 Route::get('/bookingTicket', [App\Http\Controllers\TicketController::class, 'show'])->name('bookingTicket');
 Route::get('/bookingTicket/seeAvailability', [App\Http\Controllers\TicketController::class, 'seeAvailability'])->name('seeAvailability');
-ROUTE::post('/bookingTicket/ticketConfirmation', [App\Http\Controllers\TicketController::class, 'ticketConfirmation'])->name('ticketConfirmation');
+Route::post('/bookingTicket/ticketConfirmation', [App\Http\Controllers\TicketController::class, 'ticketConfirmation'])->name('ticketConfirmation');
+Route::get('ticketValidator', [App\Http\Controllers\TicketController::class, 'ticketValidator'])->name('ticketValidator');

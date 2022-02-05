@@ -98,4 +98,20 @@ class TicketController extends Controller
                 ->with(['visit_date' => $request->visit_date]);
         }
     }
+
+    /**
+     * Show page for ticket validation (operator only).
+     *
+     * @return \Illuminate\View\View
+     */
+    public function ticketValidator()
+    {
+        $user = Auth::user();
+        if ($user->role == 2){
+            return view('ticketValidator');
+        }
+        else{
+            return view('home');
+        }
+    }
 }
