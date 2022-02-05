@@ -24,3 +24,5 @@ Route::get('/bookingTicket', [App\Http\Controllers\TicketController::class, 'sho
 Route::get('/bookingTicket/seeAvailability', [App\Http\Controllers\TicketController::class, 'seeAvailability'])->name('seeAvailability');
 Route::post('/bookingTicket/ticketConfirmation', [App\Http\Controllers\TicketController::class, 'ticketConfirmation'])->name('ticketConfirmation');
 Route::get('ticketValidator', [App\Http\Controllers\TicketController::class, 'ticketValidator'])->name('ticketValidator');
+Route::get('tickets', [App\Http\Controllers\TicketController::class, 'tickets'])->name('tickets');
+Route::get('ticketQrCode/{ticket_id}', [App\Http\Controllers\TicketController::class, 'ticketQrCode'])->name('ticketQrcode');

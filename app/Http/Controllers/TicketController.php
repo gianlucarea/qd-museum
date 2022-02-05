@@ -114,4 +114,23 @@ class TicketController extends Controller
             return view('home');
         }
     }
+
+    public function tickets()
+    {
+        $user = Auth::user();
+        $tickets = DB::table('tickets')->where('user_id', '=', $user->id)->orderBy('visit_date')->get();
+        $museums = DB::table('museums')->get();
+        $time_slots = DB::table('time_slots_visit')->get();
+        return view('tickets')
+            ->with(['tickets' => $tickets])
+            ->with(['museums' => $museums])
+            ->with(['time_slots' => $time_slots]);
+    }
+
+    public function ticketQrCode($ticket_id)
+    {
+        $tickets = DB::table('tickets')->where('id', '=', $ticket_id)->get();
+        return view('ticketQrCode')
+            ->with(['tickets' => $tickets]);
+    }
 }

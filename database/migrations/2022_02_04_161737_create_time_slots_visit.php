@@ -23,9 +23,9 @@ class CreateTimeSlotsVisit extends Migration
         DB::table('time_slots_visit')->insert([
             ['museum_id' => 1, 'description' => 'morning (from 8:00 to 12:00)', 'slot_number' => 1],
             ['museum_id' => 1, 'description' => 'afternoon (from 13:30 to 19:00)', 'slot_number' => 2],
-            ['museum_id' => 2, 'description' => 'morning (from 8:30 to 12:30)', 'slot_number' => 2],
+            ['museum_id' => 2, 'description' => 'morning (from 8:30 to 12:30)', 'slot_number' => 1],
             ['museum_id' => 2, 'description' => 'afternoon (from 14:00 to 18:00)', 'slot_number' => 2],
-            ['museum_id' => 3, 'description' => 'morning (from 9:00 to 13:00)', 'slot_number' => 2],
+            ['museum_id' => 3, 'description' => 'morning (from 9:00 to 13:00)', 'slot_number' => 1],
             ['museum_id' => 3, 'description' => 'afternoon (from 14:30 to 19:30)', 'slot_number' => 2]
         ]);
     }

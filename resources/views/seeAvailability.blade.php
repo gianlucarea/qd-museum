@@ -26,19 +26,19 @@
                                 @foreach($time_slots as $time_slot)
                                     @if($counter == 0)
                                         @if($first_time_slot_statistic > 0)
-                                            <input type="radio" id="{{ $time_slot->id }}" name="timeSlot" value="{{ $time_slot->id }}">
-                                            <label for="{{ $time_slot->id }}">{{ $time_slot->description }}. Already {{ $first_time_slot_statistic }} people have intention to visit the museum in this time slot</label><br>
+                                            <input type="radio" id="{{ $time_slot->slot_number }}" name="timeSlot" value="{{ $time_slot->slot_number }}">
+                                            <label for="{{ $time_slot->slot_number }}">{{ $time_slot->description }}. Already {{ $first_time_slot_statistic }} people have intention to visit the museum in this time slot</label><br>
                                         @else
-                                            <input type="radio" id="{{ $time_slot->id }}" name="timeSlot" value="{{ $time_slot->id }}">
-                                            <label for="{{ $time_slot->id }}">{{ $time_slot->description }}. At the moment nobody has intention to visit the museum in this time slot</label><br>
+                                            <input type="radio" id="{{ $time_slot->slot_number }}" name="timeSlot" value="{{ $time_slot->slot_number }}">
+                                            <label for="{{ $time_slot->slot_number }}">{{ $time_slot->description }}. At the moment nobody has intention to visit the museum in this time slot</label><br>
                                         @endif
                                     @else
                                         @if($second_time_slot_statistic > 0)
-                                            <input type="radio" id="{{ $time_slot->id }}" name="timeSlot" value="{{ $time_slot->id }}">
-                                            <label for="{{ $time_slot->id }}">{{ $time_slot->description }}. Already {{ $second_time_slot_statistic }} people have intention to visit the museum in this time slot</label><br>
+                                            <input type="radio" id="{{ $time_slot->slot_number }}" name="timeSlot" value="{{ $time_slot->slot_number }}">
+                                            <label for="{{ $time_slot->slot_number }}">{{ $time_slot->description }}. Already {{ $second_time_slot_statistic }} people have intention to visit the museum in this time slot</label><br>
                                         @else
-                                            <input type="radio" id="{{ $time_slot->id }}" name="timeSlot" value="{{ $time_slot->id }}">
-                                            <label for="{{ $time_slot->id }}">{{ $time_slot->description }}. At the moment nobody has intention to visit the museum in this time slot</label><br>
+                                            <input type="radio" id="{{ $time_slot->slot_number }}" name="timeSlot" value="{{ $time_slot->slot_number }}">
+                                            <label for="{{ $time_slot->slot_number }}">{{ $time_slot->description }}. At the moment nobody has intention to visit the museum in this time slot</label><br>
                                         @endif
                                     @endif
                                     @php($counter = $counter + 1)

@@ -73,6 +73,10 @@
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('bookingTicket') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         Biglietteria
                                     </a>
+                                    <br/>
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('tickets') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Biglietti
+                                    </a>
                                 @endif
                                 @if(Auth::user()->role == 2)
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('ticketValidator') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
