@@ -26,3 +26,4 @@ Route::post('/bookingTicket/ticketConfirmation', [App\Http\Controllers\TicketCon
 Route::get('ticketValidator', [App\Http\Controllers\TicketController::class, 'ticketValidator'])->name('ticketValidator');
 Route::get('tickets', [App\Http\Controllers\TicketController::class, 'tickets'])->name('tickets');
 Route::get('ticketQrCode/{ticket_id}', [App\Http\Controllers\TicketController::class, 'ticketQrCode'])->name('ticketQrcode');
+Route::get('validation/{ticket_id}/{user_id}', [App\Http\Controllers\TicketController::class, 'validation'])->name('validation');

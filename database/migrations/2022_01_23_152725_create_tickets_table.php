@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Carbon\Carbon;
 
 class CreateTicketsTable extends Migration
 {
@@ -29,6 +30,7 @@ class CreateTicketsTable extends Migration
             ['museum_id' => 2, 'user_id' => 8, 'visit_date' => date('2022/03/11'), 'time_slot_number' => 2, 'validated' => 0],
             ['museum_id' => 3, 'user_id' => 7, 'visit_date' => date('2022/03/12'), 'time_slot_number' => 1, 'validated' => 0],
             ['museum_id' => 3, 'user_id' => 8, 'visit_date' => date('2022/03/12'), 'time_slot_number' => 2, 'validated' => 0],
+            ['museum_id' => 1, 'user_id' => 9, 'visit_date' => Carbon::now()->toDateString(), 'time_slot_number' => 2, 'validated' => 0]
         ]);
     }
 

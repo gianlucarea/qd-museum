@@ -6,6 +6,11 @@
 </head>
 <body>
     <div class="container">
+        <div class="row" style="margin-bottom: 1%">
+            <a class="navbar-brand" href="{{ url('/tickets') }}">
+                Return to tickets
+            </a>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <video id="preview" width="100%"></video>
@@ -30,7 +35,21 @@
         });
 
         scanner.addListener('scan', function (c) {
-            document.getElementById('text').value=c;
+            let qrString = c;
+            document.getElementById('text').value = "validation in progress";
+            if(qrString.includes('ticket_id:') && qrString.includes('user_id:')) {
+                qrString = qrString.replace('ticket_id:', '')
+                qrString = qrString.replace('user_id:', '-')
+                let divisor = qrString.indexOf('-')
+                let ticket_id = qrString.substring(0, divisor)
+                let user_id = qrString.substring(divisor + 1)
+                let url = "{{ url('validation/ticket_id/user_id') }}";
+                url = url.replace('ticket_id', ticket_id);
+                url = url.replace('user_id', user_id);
+                document.location.href = url
+            } else {
+                document.getElementById('text').value = "error: QRcode not accepted";
+            }
         })
     </script>
 </body>

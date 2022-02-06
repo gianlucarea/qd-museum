@@ -23,6 +23,7 @@ class TicketController extends Controller
         $museums = DB::table('museums')->get();
         return view('booking')->with(['museums' => $museums]);
     }
+
     /**
      * Show page for buy Tickets after see the availability.
      *
@@ -32,32 +33,29 @@ class TicketController extends Controller
     {
         // make the check of validity of passed data (understand how they are exactly passed)
         // and return the view with this passed data plus the statistical data of tickets bought for that date.
-        if ($request->museum == null or $request->visitDate == null){
+        if ($request->museum == null or $request->visitDate == null) {
             $museums = DB::table('museums')->get();
             $error = 'please choose both the museum and the date in which the visit is intended (of course set a date which is not in the past)';
             return view('booking')
                 ->with(['museums' => $museums])
                 ->with(['error' => $error]);
-        }
-        else{
+        } else {
             $date = $request->visitDate;
-            if (Carbon::now()->startOfDay()->gt($date)){
+            if (Carbon::now()->startOfDay()->gt($date)) {
                 $museums = DB::table('museums')->get();
                 $error = 'please choose both the museum and the date in which the visit is intended (of course set a date which is not in the past)';
                 return view('booking')
                     ->with(['museums' => $museums])
                     ->with(['error' => $error]);
-            }
-            else{
+            } else {
                 $tickets_already_bought = DB::table('tickets')->where('visit_date', '=', $date)->where('museum_id', '=', $request->museum)->count();
-                if ($tickets_already_bought > 500){
+                if ($tickets_already_bought > 500) {
                     $museums = DB::table('museums')->get();
                     $error = 'in the selected date the available tickets are already sold';
                     return view('booking')
                         ->with(['museums' => $museums])
                         ->with(['error' => $error]);
-                }
-                else{
+                } else {
                     $museum = DB::table('museums')->where('id', '=', $request->museum)->get();
                     $time_slots = DB::table('time_slots_visit')->where('museum_id', '=', $request->museum)->get();
                     $first_time_slot_statistic = DB::table('tickets')->where('museum_id', '=', $request->museum)->where('visit_date', '=', $request->visitDate)->where('time_slot_number', '=', 1)->count();
@@ -78,20 +76,20 @@ class TicketController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function ticketConfirmation(Request $request){
+    public function ticketConfirmation(Request $request)
+    {
         //data are already validate in seeAvailability
         $museum_id = $request->museum_id;
         $user = Auth::user();
         $museum = DB::table('museums')->where('id', '=', $museum_id)->get();
-        if ($request->timeSlot != null){
+        if ($request->timeSlot != null) {
             DB::table('tickets')->insert(["museum_id" => $museum_id, "user_id" => $user->id, "visit_date" => $request->visit_date, "time_slot_number" => $request->timeSlot]);
             $time_slots = DB::table('time_slots_visit')->where('museum_id', '=', $museum_id)->where('slot_number', '=', $request->timeSlot)->get();
             return view('ticketConfirmation')
                 ->with(['museums' => $museum])
                 ->with(['visit_date' => $request->visit_date])
                 ->with(['time_slots' => $time_slots]);
-        }
-        else{
+        } else {
             DB::table('tickets')->insert(["museum_id" => $museum_id, "user_id" => $user->id, "visit_date" => $request->visit_date, "time_slot_number" => 0]);
             return view('ticketConfirmation')
                 ->with(['museums' => $museum])
@@ -107,10 +105,9 @@ class TicketController extends Controller
     public function ticketValidator()
     {
         $user = Auth::user();
-        if ($user->role == 2){
+        if ($user->role == 2) {
             return view('ticketValidator');
-        }
-        else{
+        } else {
             return view('home');
         }
     }
@@ -132,5 +129,36 @@ class TicketController extends Controller
         $tickets = DB::table('tickets')->where('id', '=', $ticket_id)->get();
         return view('ticketQrCode')
             ->with(['tickets' => $tickets]);
+    }
+
+    public function validation($ticket_id, $user_id)
+    {
+        $ticket = DB::table('tickets')->where('id', '=', $ticket_id)->get()->first();
+        $success = 1;
+        $description = "";
+        if($ticket->user_id == $user_id)
+        {
+            if ($ticket->validated == 0)
+            {
+                $now = Carbon::now()->toDateString();
+                $visit_date = Carbon::createFromFormat('Y-m-d', $ticket->visit_date)->toDateString();
+                if ($now == $visit_date)
+                {
+                    DB::table('tickets')->where('id', '=', $ticket_id)->update(['validated' => 1]);
+                } else {
+                    $success = 0;
+                    $description = "the visit date of the ticket is not today";
+                    error_log("the date of ticket is: ".$visit_date." while now is: ".$now);
+
+                }
+            } else {
+                $success = 0;
+                $description = "the ticket is already used";
+            }
+        }else{
+            $success = 0;
+            $description = "the ticket don't belong to you";
+        }
+        return view('validation')->with(['success' => $success])->with(['description' => $description]);
     }
 }
