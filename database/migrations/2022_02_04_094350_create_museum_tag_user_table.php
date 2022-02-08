@@ -17,9 +17,9 @@ class CreateMuseumTagUserTable extends Migration
             $table->id();
             $table->foreignId('museum_tag_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('piano');
-            $table->string('posX');
-            $table->string('posY');
+            $table->string('piano'); // WARNING: if choose from string to integer warn Daniele
+            $table->string('posX');  // DO YOU HAVE READ, YEAH?!
+            $table->string('posY');  // IF YOU DON'T: C'mon dude!
             $table->unique(['museum_tag_id','user_id']);
         });
     }

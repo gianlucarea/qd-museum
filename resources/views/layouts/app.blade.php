@@ -71,16 +71,20 @@
                                 </div>
                                 @if(Auth::user()->role == 1)
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('bookingTicket') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        Biglietteria
+                                        Booking tickets
                                     </a>
                                     <br/>
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('tickets') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        Biglietti
+                                        Tickets
                                     </a>
                                 @endif
                                 @if(Auth::user()->role == 2)
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('ticketValidator') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        Validazione biglietti
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('ticketValidator/chooseMuseum') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Tickets validation
+                                    </a>
+                                    <br/>
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('tagDecoupling') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        tag decoupling
                                     </a>
                                 @endif
                             </li>
