@@ -9,14 +9,16 @@
     </a>
 </div>
     <div >
+        <h1 style="width: 100%"> Time slot del museo <br> <strong>{{$museum->name}}</strong></h1>
+
         <div class="container" style=" display: flex; flex-direction: row; width:100%">
             <ul class="container-ul" style=" display: inline-flex; flex-direction: row; width:100%">
-           
+            @foreach($time_slots as $time_slot)
                     <li>
                        <div class="Artwork" style="padding: 2px 16px; width:80%">
-                           <p><strong>{{$artwork->title}}</strong></p>
-                           <p>{{$artwork->description}}</p>
-                           <a href="/museum/artworks/delete/{{$artwork->id}}" class="btn btn-danger" onclick="
+                           <p>{{$time_slot->slot_number}}</p>
+                           <p>{{$time_slot->description}}</p>
+                           <a href="/museum/timeslot/delete/{{$time_slot->id}}" class="btn btn-danger" onclick="
                                  var result = confirm('Are you sure you want to delete this record?');
                                  if(!result){
                                     event.preventDefault();
@@ -25,6 +27,7 @@
                            </a>
                        </div>
                     </li>
+        @endforeach
             </ul>
         </div>
 </div>

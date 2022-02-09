@@ -48,6 +48,10 @@ class Museum extends Model
         return $this->hasMany(Museum_Tag::class);
     }
 
+    public function time_slot_visit(){
+        return $this->hasMany(Time_Slot::class);
+    }
+
     public function user(){
         return $this->hasMany(User::class);
     }
