@@ -18,7 +18,7 @@
                        <div class="Artwork" style="padding: 2px 16px; width:80%">
                            <p>{{$time_slot->slot_number}}</p>
                            <p>{{$time_slot->description}}</p>
-                           <a href="/museum/timeslot/delete/{{$time_slot->id}}" class="btn btn-danger" onclick="
+                           <a href="/museum/slot/delete/{{$time_slot->id}}" class="btn btn-danger" onclick="
                                  var result = confirm('Are you sure you want to delete this record?');
                                  if(!result){
                                     event.preventDefault();

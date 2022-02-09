@@ -40,4 +40,7 @@ Route::get('/museum/artworks/{id}', [App\Http\Controllers\ArtworkController::cla
 Route::get('/museum/artwork/{id}', [App\Http\Controllers\ArtworkController::class, 'getArtwork'])->name('getArtworks');
 Route::get('/museum/artworks/delete/{id}', [App\Http\Controllers\ArtworkController::class, 'delete'])->name('deleteArtwork');
 Route::get('/museum/slots/{id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'show'])->name('showMuseumTimeSlot');
+Route::get('/museum/slot/delete/{id}',[App\Http\Controllers\Time_Slot_VisitController::class, 'delete'])->name('deleteTimeSlot');
+Route::get('/museum/{id}/addTimeslot',function(){return view('addTimeSlot');})->name('addTimeSlot');
+Route::post('/museum/storeTimeslot', [App\Http\Controllers\Time_Slot_VisitController::class, 'store'])->name('storeTimeslot');
 
