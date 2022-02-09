@@ -98,15 +98,78 @@ class TicketController extends Controller
     }
 
     /**
+     * Show page for choose museum before page for ticket validation (operator only).
+     *
+     * @return \Illuminate\View\View
+     */
+    public function ticketValidator_choose_museum()
+    {
+        $user = Auth::user();
+        if ($user->role == 2) {
+            $museums = DB::table('museums')->get();
+            return view('ticketValidator_choose_museum')
+                ->with(['museums' => $museums]);
+        } else {
+            return view('home');
+        }
+    }
+
+    /**
+     * Show page for choose tag before page for ticket validation (operator only).
+     *
+     * @return \Illuminate\View\View
+     */
+    public function ticketValidator_choose_tag(Request $request)
+    {
+        $user = Auth::user();
+        if ($user->role == 2) {
+            if($request->museum == null){
+                $museums = DB::table('museums')->get();
+                $message = "you don't have choose a museum";
+                return view('ticketValidator_choose_museum')
+                    ->with(['museums' => $museums])
+                    ->with(['message' => $message]);
+            } else {
+            $museum_id = $request->museum;
+            $museums = DB::table('museums')->where('id', '=', $museum_id)->get();
+            $tags = DB::table('museum_tags')->where('museum_id', '=', $museum_id)->get();
+            return view('ticketValidator_choose_tag')
+                ->with(['museums' => $museums])
+                ->with(['tags' => $tags]);
+            }
+        } else {
+            return view('home');
+        }
+    }
+
+    /**
      * Show page for ticket validation (operator only).
      *
      * @return \Illuminate\View\View
      */
-    public function ticketValidator()
+    public function ticketValidator_qrCodeReader(Request $request)
     {
         $user = Auth::user();
         if ($user->role == 2) {
-            return view('ticketValidator');
+            if($request->tag_id == null){
+                $museum_id = $request->museum_id;
+                $museums = DB::table('museums')->where('id', '=', $museum_id)->get();
+                $tags = DB::table('museum_tags')->where('museum_id', '=', $museum_id)->get();
+                $message = "you don't have choose a museum";
+                return view('ticketValidator_choose_tag')
+                    ->with(['museums' => $museums])
+                    ->with(['tags' => $tags])
+                    ->with(['message' => $message]);
+            }
+            else {
+                $museum_id = $request->museum_id;
+                $tag_id = $request->tag_id;
+                $museums = DB::table('museums')->where('id', '=', $museum_id)->get();
+                $tags = DB::table('museum_tags')->where('id', '=', $tag_id)->get();
+                return view('ticketValidator_qrCodeReader')
+                    ->with(['museums' => $museums])
+                    ->with(['tags' => $tags]);
+            }
         } else {
             return view('home');
         }
@@ -131,29 +194,72 @@ class TicketController extends Controller
             ->with(['tickets' => $tickets]);
     }
 
-    public function validation($ticket_id, $user_id)
+    public function requestRefund($ticket_id)
+    {
+        $tickets = DB::table('tickets')->where('id', '=', $ticket_id)->get();
+        $museums = DB::table('museums')->get();
+        $time_slots = DB::table('time_slots_visit')->get();
+        $message = "";
+        $success = 1;
+        foreach ($tickets as $ticket){
+            if ($ticket->validated == 1){
+                $message = "the ticket is already used, you can't request the refund.\n";
+                $success = 0;
+            }
+            if($ticket->refundRequest == 1){
+                $message = "the request for the refund of this ticket is already sent.\n";
+                $success = 0;
+            }
+            $now = Carbon::now();
+            $visit_date = Carbon::createFromFormat('Y-m-d', $ticket->visit_date);
+            if($visit_date->gt($now)){
+                $message = $message."You can request the refund only after the visit date of the ticket.\n";
+                $success = 0;
+            }
+        }
+        if($success == 1){
+            DB::table('tickets')->where('id', '=', $ticket_id)->update(['refundRequest' => 1]);
+        }
+        return view('requestRefund')
+            ->with(['tickets' => $tickets])
+            ->with(['museums' => $museums])
+            ->with(['time_slots' => $time_slots])
+            ->with(['success' => $success])
+            ->with(['message' => $message]);
+    }
+
+    public function validation($museum_id, $tag_id, $ticket_id, $user_id)
     {
         $ticket = DB::table('tickets')->where('id', '=', $ticket_id)->get()->first();
+        $tag = DB::table('museum_tags')->where('id', '=', $tag_id)->get()->first();
         $success = 1;
         $description = "";
         if($ticket->user_id == $user_id)
         {
-            if ($ticket->validated == 0)
+            if($ticket->museum_id == $museum_id)
             {
-                $now = Carbon::now()->toDateString();
-                $visit_date = Carbon::createFromFormat('Y-m-d', $ticket->visit_date)->toDateString();
-                if ($now == $visit_date)
+                if ($ticket->validated == 0)
                 {
-                    DB::table('tickets')->where('id', '=', $ticket_id)->update(['validated' => 1]);
+                    $now = Carbon::now()->toDateString();
+                    $visit_date = Carbon::createFromFormat('Y-m-d', $ticket->visit_date)->toDateString();
+                    if ($now == $visit_date)
+                    {
+                        DB::table('tickets')->where('id', '=', $ticket_id)->update(['validated' => 1]);
+                        DB::table('museum_tags')->where('id', '=', $tag_id)->update(['available' => 0]);
+                        DB::table('museum_tag_user')->insert(['museum_tag_id' => $tag_id, 'user_id' => $user_id, 'piano' => '0', 'posX' => '0', 'posY' => '0']);
+                    } else {
+                        $success = 0;
+                        $description = "the visit date of the ticket is not today";
+                        error_log("the date of ticket is: ".$visit_date." while now is: ".$now);
+
+                    }
                 } else {
                     $success = 0;
-                    $description = "the visit date of the ticket is not today";
-                    error_log("the date of ticket is: ".$visit_date." while now is: ".$now);
-
+                    $description = "the ticket is already used";
                 }
-            } else {
+            }else{
                 $success = 0;
-                $description = "the ticket is already used";
+                $description = "the ticket it's not for this museum";
             }
         }else{
             $success = 0;

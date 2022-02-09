@@ -73,21 +73,31 @@
                                         @csrf
                                     </form>
                                 </div>
+                            </li>
                                 @if(Auth::user()->role == 1)
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('bookingTicket') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        Biglietteria
-                                    </a>
-                                    <br/>
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('tickets') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        Biglietti
-                                    </a>
+                                    <li>
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('bookingTicket') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            Booking tickets
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('tickets') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            Tickets
+                                        </a>
+                                    </li>
                                 @endif
                                 @if(Auth::user()->role == 2)
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('ticketValidator') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        Validazione biglietti
-                                    </a>
+                                    <li>
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('ticketValidator/chooseMuseum') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            Tickets validation
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('tagDecoupling') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            tag decoupling
+                                        </a>
+                                    </li>
                                 @endif
-                            </li>
                         @endguest
                     </ul>
                 </div>
