@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Artwork extends Model
 {
     use HasFactory;
-
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -17,10 +17,7 @@ class Artwork extends Model
     protected $fillable = [
         'title',
         'room_id',
-        'year',
-        'technique',
-        'dimension',
-        'author',
+        'description',
     ];
 
     /**
