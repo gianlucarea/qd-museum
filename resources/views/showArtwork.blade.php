@@ -11,7 +11,7 @@
     <div >
         <div class="container" style=" display: flex; flex-direction: row; width:100%">
             <ul class="container-ul" style=" display: inline-flex; flex-direction: row; width:100%">
-            @foreach($artworks as $artwork)
+           
                     <li>
                        <div class="Artwork" style="padding: 2px 16px; width:80%">
                            <p><strong>{{$artwork->title}}</strong></p>
@@ -25,7 +25,7 @@
                            </a>
                        </div>
                     </li>
-        @endforeach
+        
             </ul>
         </div>
 </div>

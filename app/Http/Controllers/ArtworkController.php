@@ -20,8 +20,8 @@ class ArtworkController extends Controller
     }
 
     public function getArtwork($id){
-        $artworks = Artwork::where('id','=',$id)->first();
-        return view('showArtwork')->with(compact('artworks'));
+        $artwork = Artwork::where('id','=',$id)->first();
+        return view('showArtwork')->with(compact('artwork'));
     }
 
     public static function store(Request $request){
