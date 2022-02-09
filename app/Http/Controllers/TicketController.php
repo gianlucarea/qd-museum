@@ -194,6 +194,40 @@ class TicketController extends Controller
             ->with(['tickets' => $tickets]);
     }
 
+    public function requestRefund($ticket_id)
+    {
+        $tickets = DB::table('tickets')->where('id', '=', $ticket_id)->get();
+        $museums = DB::table('museums')->get();
+        $time_slots = DB::table('time_slots_visit')->get();
+        $message = "";
+        $success = 1;
+        foreach ($tickets as $ticket){
+            if ($ticket->validated == 1){
+                $message = "the ticket is already used, you can't request the refund.\n";
+                $success = 0;
+            }
+            if($ticket->refundRequest == 1){
+                $message = "the request for the refund of this ticket is already sent.\n";
+                $success = 0;
+            }
+            $now = Carbon::now();
+            $visit_date = Carbon::createFromFormat('Y-m-d', $ticket->visit_date);
+            if($visit_date->gt($now)){
+                $message = $message."You can request the refund only after the visit date of the ticket.\n";
+                $success = 0;
+            }
+        }
+        if($success == 1){
+            DB::table('tickets')->where('id', '=', $ticket_id)->update(['refundRequest' => 1]);
+        }
+        return view('requestRefund')
+            ->with(['tickets' => $tickets])
+            ->with(['museums' => $museums])
+            ->with(['time_slots' => $time_slots])
+            ->with(['success' => $success])
+            ->with(['message' => $message]);
+    }
+
     public function validation($museum_id, $tag_id, $ticket_id, $user_id)
     {
         $ticket = DB::table('tickets')->where('id', '=', $ticket_id)->get()->first();

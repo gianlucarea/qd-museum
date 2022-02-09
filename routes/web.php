@@ -28,6 +28,7 @@ Route::get('ticketValidator/chooseTag', [App\Http\Controllers\TicketController::
 Route::get('ticketValidator/QrCodeReader', [App\Http\Controllers\TicketController::class, 'ticketValidator_qrCodeReader'])->name('ticketValidator_qrCodeReader');
 Route::get('tickets', [App\Http\Controllers\TicketController::class, 'tickets'])->name('tickets');
 Route::get('ticketQrCode/{ticket_id}', [App\Http\Controllers\TicketController::class, 'ticketQrCode'])->name('ticketQrcode');
+Route::get('requestRefund/{ticket_id}', [App\Http\Controllers\TicketController::class, 'requestRefund'])->name('requestRefund');
 Route::get('validation/{museum_id}/{tag_id}/{ticket_id}/{user_id}', [App\Http\Controllers\TicketController::class, 'validation'])->name('validation');
 Route::get('tagDecoupling', [App\Http\Controllers\Museum_TagController::class, 'tagDecoupling'])->name('tagDecoupling');
 Route::post('/tagDecoupling/outcome', [App\Http\Controllers\Museum_TagController::class, 'tagDecoupling_effective'])->name('tagDecoupling_effective');
