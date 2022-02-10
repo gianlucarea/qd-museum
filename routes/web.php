@@ -37,6 +37,8 @@ Route::post('/tagDecoupling/outcome', [App\Http\Controllers\Museum_TagController
 Route::get('/addArtwork', function (){return view('addArtwork');})->name('addArtwork');
 Route::post('/storeArtwork', [App\Http\Controllers\ArtworkController::class, 'store'])->name('storeArtwork');
 Route::get('/museum/artworks/{id}', [App\Http\Controllers\ArtworkController::class, 'show'])->name('showArtworks');
+Route::get('/chooseMuseumForRemoveArtwork', [App\Http\Controllers\ArtworkController::class, 'chooseMuseumForRemoveArtwork'])->name('chooseMuseumForRemoveArtwork');
+Route::get('/museum/showArtworks', [App\Http\Controllers\ArtworkController::class, 'getArtworksByMuseum'])->name('getArtworksByMuseum');
 Route::get('/museum/artwork/{id}', [App\Http\Controllers\ArtworkController::class, 'getArtwork'])->name('getArtworks');
 Route::get('/museum/artworks/delete/{id}', [App\Http\Controllers\ArtworkController::class, 'delete'])->name('deleteArtwork');
 Route::get('/museum/slots/{id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'show'])->name('showMuseumTimeSlot');

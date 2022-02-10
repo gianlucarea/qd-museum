@@ -7,6 +7,7 @@ use App\Models\Room;
 use Illuminate\Http\Request;
 use App\Models\Artwork;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ArtworkController extends Controller
 {
@@ -19,9 +20,23 @@ class ArtworkController extends Controller
         return view('showArtworks')->with(compact('artworks'))->with(compact('rooms'));
     }
 
+    public function chooseMuseumForRemoveArtwork()
+    {
+        $museums = DB::table('museums')->get();
+        return view('chooseMuseumForRemoveArtwork')->with(['museums' => $museums]);
+    }
+
     public function getArtwork($id){
         $artwork = Artwork::where('id','=',$id)->first();
         return view('showArtwork')->with(compact('artwork'));
+    }
+
+    public function getArtworksByMuseum(Request $request){
+        $request->validate([
+            'museum'=>'required',
+        ]);
+        $museum_id = $request->museum;
+        return redirect()->route('showArtworks', ['id' => $museum_id]);
     }
 
     public static function store(Request $request){
@@ -31,16 +46,20 @@ class ArtworkController extends Controller
             'room_id'=>'required',
         ]);
         $room = Room::where('id','=', $request->room_id)->first();
-        $museum_id = $room->museum_id;
-        if (Auth::user()->role == 2 || Auth::user()->role == 3 ) {
-            $artwork = new Artwork();
-            $artwork->title = $request->title;
-            $artwork->description = $request->description;
-            $artwork->room_id = $request->room_id;
-            $artwork->save();
-            return redirect()->route('showArtworks', ['id' => $museum_id]);
+        if (empty($room)){
+            return View('addArtwork');
         } else {
-            return redirect()->back()->with('message','Not Authorized');
+            $museum_id = $room->museum_id;
+            if (Auth::user()->role == 2 || Auth::user()->role == 3) {
+                $artwork = new Artwork();
+                $artwork->title = $request->title;
+                $artwork->description = $request->description;
+                $artwork->room_id = $request->room_id;
+                $artwork->save();
+                return redirect()->route('showArtworks', ['id' => $museum_id]);
+            } else {
+                return redirect()->back()->with('message', 'Not Authorized');
+            }
         }
     }
 
