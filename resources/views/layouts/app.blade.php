@@ -54,18 +54,25 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre href="{{ url('/user/profile') }}" >
                                     {{ Auth::user()->name }}
                                 </a>
                             </li>
 
                                 @if(Auth::user()->role == 2 || Auth::user()->role == 3)
+                                <li><b>Museum Management</b>
+                                <ul>
                                     <li>
                                         <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre href="{{ url('/addArtwork') }}" > Add new Artwork</a>
                                     </li>
                                     <li>
                                         <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre href="{{ url('/chooseMuseumForRemoveArtwork') }}" > Remove Artwork</a>
                                     </li>
+                                    <li>
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre href="{{ url('/visitorTracker') }}" > Visitor Tracker</a>
+                                    </li>
+                                </ul>
+                                </li>
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

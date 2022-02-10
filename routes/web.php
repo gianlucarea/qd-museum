@@ -46,3 +46,5 @@ Route::get('/museum/slot/delete/{id}',[App\Http\Controllers\Time_Slot_VisitContr
 Route::get('/museum/{id}/addTimeslot',function(){return view('addTimeSlot');})->name('addTimeSlot');
 Route::post('/museum/storeTimeslot', [App\Http\Controllers\Time_Slot_VisitController::class, 'store'])->name('storeTimeslot');
 
+Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'getUserInfo'])->name('UserProfile');
+Route::get('/chooseMuseumForTracking', [App\Http\Controller\UserController::class, 'getWorkingmusem'])->name('getWorkingMuseum');
