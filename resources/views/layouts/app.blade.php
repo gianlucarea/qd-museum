@@ -102,7 +102,17 @@
                                     </li>
                                     <li>
                                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('tagDecoupling') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            tag decoupling
+                                            Tag Decoupling
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('/timeslot/chooseMuseum') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            Add Time Slot 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('/timeslot/chooseMuseumToShow') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            Remove Time Slot
                                         </a>
                                     </li>
                                 @endif

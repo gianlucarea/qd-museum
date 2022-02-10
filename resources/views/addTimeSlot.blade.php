@@ -9,13 +9,12 @@
                 <div class="card-body">
                     <form method="post" action="{{ url('/museum/storeTimeslot') }}">
                         @csrf
-                        
                         <div class="row" style="margin-bottom: 1%">
                             <label for="slot_number">Slot Number:</label>
                             <input type="text" id="slot_number" name="slot_number">
                         </div>
                         <div class="row" style="margin-bottom: 1%">
-                            <input type="text" id="museum_id" name="museum_id" hidden value="{{request()->id}}">
+                            <input type="text" id="museum_id" name="museum_id" hidden value="{{request()->museum}}">
                         </div>
                         <div class="row" style="margin-bottom: 1%">
                             <label for="description">Description:</label>
