@@ -43,8 +43,11 @@ Route::get('/museum/artwork/{id}', [App\Http\Controllers\ArtworkController::clas
 Route::get('/museum/artworks/delete/{id}', [App\Http\Controllers\ArtworkController::class, 'delete'])->name('deleteArtwork');
 Route::get('/museum/slots/{id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'show'])->name('showMuseumTimeSlot');
 Route::get('/museum/slot/delete/{id}',[App\Http\Controllers\Time_Slot_VisitController::class, 'delete'])->name('deleteTimeSlot');
-Route::get('/museum/{id}/addTimeslot',function(){return view('addTimeSlot');})->name('addTimeSlot');
+Route::get('/museum/addTimeslot/',function(){return view('addTimeSlot');})->name('addTimeSlot');
 Route::post('/museum/storeTimeslot', [App\Http\Controllers\Time_Slot_VisitController::class, 'store'])->name('storeTimeslot');
+Route::get('/timeslot/chooseMuseum', [App\Http\Controllers\Time_Slot_VisitController::class, 'chooseMuseumForRemoveTimeSlot'])->name('timeslot_choose_museum');
+Route::get('/timeslot/chooseMuseumToShow', [App\Http\Controllers\Time_Slot_VisitController::class, 'chooseMuseumToShow'])->name('chooseMuseumToShow');
+Route::get('/museum/slots/show', [App\Http\Controllers\Time_Slot_VisitController::class, 'show_to_delete'])->name('show_to_delete');
 
 Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'getUserInfo'])->name('UserProfile');
 Route::get('/chooseMuseumForTracking', [App\Http\Controller\UserController::class, 'getWorkingmusem'])->name('getWorkingMuseum');

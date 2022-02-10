@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Auth;
 
 class Time_Slot_VisitController extends Controller
 {
-    public static function show($museum_id)
+    public static function show(Request $request)
     {
+        $museum_id = $request->museum;
         $time_slots = DB::table('time_slots_visit')->where('museum_id', '=' , $museum_id)->get();
         $museum = Museum::where('id','=',$museum_id)->first();
         return view('showTimeSlots')->with(compact('time_slots'))->with(compact('museum'));
@@ -38,16 +39,36 @@ class Time_Slot_VisitController extends Controller
             return redirect()->back()->with('message','Not Authorized');
         }
     }
+
     public  function delete($id){
         $time_slot = DB::table('time_slots_visit')->find($id);
+        $museum = DB::table('museums')->where('id','=',$time_slot->museum_id)->first();
+
         if (Auth::user()->role == 2 || Auth::user()->role == 3 ) {
+
             if(is_null($time_slot)){
-            return redirect()->back()->with('message','Alredy Deleted');
-        }
+                $time_slots = DB::table('time_slots_visit')->where('museum_id','=',$museum->id)->get();
+                return view('showTimeSlots')->with(compact('time_slots'))->with(compact('museum'));
+            }
             $time_slot = DB::table('time_slots_visit')->where('id','=',$id)->delete();
-            return redirect()->back()->with('message','Success');
+            $time_slots = DB::table('time_slots_visit')->where('museum_id','=',$museum->id)->get();
+            return view('showTimeSlots')->with(compact('time_slots'))->with(compact('museum'));
         } else {
-            return redirect()->back()->with('message','Not Authorized');
+            $time_slots = DB::table('time_slots_visit')->where('museum_id','=',$museum->id)->get();
+            return view('showTimeSlots')->with(compact('time_slots'))->with(compact('museum'));
         }
     }
+    public function chooseMuseumForRemoveTimeSlot()
+    {
+        $museums = DB::table('museums')->get();
+        return view('timeslot_choose_museum')->with(['museums' => $museums]);
+
+    }
+
+    public function chooseMuseumToShow()
+    {
+        $museums = DB::table('museums')->get();
+        return view('timeslot_museum_delete')->with(['museums' => $museums]);
+    }
+
 }
