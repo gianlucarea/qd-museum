@@ -58,14 +58,15 @@ class TicketController extends Controller
                 } else {
                     $museum = DB::table('museums')->where('id', '=', $request->museum)->get();
                     $time_slots = DB::table('time_slots_visit')->where('museum_id', '=', $request->museum)->get();
-                    $first_time_slot_statistic = DB::table('tickets')->where('museum_id', '=', $request->museum)->where('visit_date', '=', $request->visitDate)->where('time_slot_number', '=', 1)->count();
-                    $second_time_slot_statistic = DB::table('tickets')->where('museum_id', '=', $request->museum)->where('visit_date', '=', $request->visitDate)->where('time_slot_number', '=', 2)->count();
+                    $time_slot_statistic_collection = collect([]);
+                    foreach($time_slots as $time_slot) {
+                        $time_slot_statistic_collection->put($time_slot->id, DB::table('tickets')->where('museum_id', '=', $request->museum)->where('visit_date', '=', $request->visitDate)->where('time_slot_number', '=', $time_slot->slot_number)->count());
+                    }
                     return view('seeAvailability')
                         ->with(['museums' => $museum])
                         ->with(['visit_date' => $date])
                         ->with(['time_slots' => $time_slots])
-                        ->with(['first_time_slot_statistic' => $first_time_slot_statistic])
-                        ->with(['second_time_slot_statistic' => $second_time_slot_statistic]);
+                        ->with(['time_slot_statistic_collection' => $time_slot_statistic_collection]);
                 }
             }
         }

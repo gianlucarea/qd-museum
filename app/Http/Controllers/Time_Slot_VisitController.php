@@ -50,6 +50,11 @@ class Time_Slot_VisitController extends Controller
                 $time_slots = DB::table('time_slots_visit')->where('museum_id','=',$museum->id)->get();
                 return view('showTimeSlots')->with(compact('time_slots'))->with(compact('museum'));
             }
+            $time_slot = DB::table('time_slots_visit')->where('id', '=', $id)->get()->first();
+            $tickets_to_update = DB::table('tickets')->where('time_slot_number', '=', $time_slot->slot_number)->where('museum_id', '=', $time_slot->museum_id)->get();
+            foreach($tickets_to_update as $ticket_to_update){
+                DB::table('tickets')->where('id', '=', $ticket_to_update->id)->update(['time_slot_number' => 0]);
+            }
             $time_slot = DB::table('time_slots_visit')->where('id','=',$id)->delete();
             $time_slots = DB::table('time_slots_visit')->where('museum_id','=',$museum->id)->get();
             return view('showTimeSlots')->with(compact('time_slots'))->with(compact('museum'));
