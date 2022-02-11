@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\Console\Input\Input;
 use Auth;
 
@@ -23,7 +25,8 @@ class UserController extends Controller
 
     public function getWorkingMuseum(Request $request)
     {
-        $user = Auth::user();
+        $museums = DB::table('museums')->get();
+        return view('chooseMuseumForTracking')->with(['museums' => $museums]);
     }
 
     /**
@@ -43,7 +46,26 @@ class UserController extends Controller
      */
     public function operatorTracking (Request $request)
     {
-        $user = Auth::user();
+        $request->validate([
+            'museum'=>'required',
+        ]);
+        $museum_id = $request->museum;
+        return view('operatorTracking')->with(['museum_id' => $museum_id]);
+    }
+
+    public function operatorTrackingUpdate(Request $request) {
+        //$request->validate([
+        //    'museum'=>'required',
+        //]);
+        
+        $response = Http::post('http://127.0.0.1:5050/userPos', [
+            'target' => "ALL",
+            'museum' => $request->museum,
+        ]);
+        $data = $response->json();
+        return response()->json([
+            'response' => $data
+        ]);
     }
 
 }

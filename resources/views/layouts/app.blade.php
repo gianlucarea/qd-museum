@@ -69,7 +69,7 @@
                                         <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre href="{{ url('/chooseMuseumForRemoveArtwork') }}" > Remove Artwork</a>
                                     </li>
                                     <li>
-                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre href="{{ url('/visitorTracker') }}" > Visitor Tracker</a>
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre href="{{ url('/chooseMuseumForTracking') }}" > Visitor Tracker</a>
                                     </li>
                                 </ul>
                                 </li>
