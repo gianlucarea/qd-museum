@@ -33,6 +33,12 @@ Route::get('requestRefund/{ticket_id}', [App\Http\Controllers\TicketController::
 Route::get('validation/{museum_id}/{tag_id}/{ticket_id}/{user_id}', [App\Http\Controllers\TicketController::class, 'validation'])->name('validation');
 Route::get('tagDecoupling', [App\Http\Controllers\Museum_TagController::class, 'tagDecoupling'])->name('tagDecoupling');
 Route::post('/tagDecoupling/outcome', [App\Http\Controllers\Museum_TagController::class, 'tagDecoupling_effective'])->name('tagDecoupling_effective');
+Route::get('/feedbackMuseumsAndArtworks', [App\Http\Controllers\UserController::class, 'feedbackMuseumsAndArtworks'])->name('feedbackMuseumsAndArtworks');
+Route::get('/feedbackMuseumsAndArtworks/ChosenMuseum', [App\Http\Controllers\UserController::class, 'feedbackMuseumsAndArtworksChosenMuseum'])->name('feedbackMuseumsAndArtworksChosenMuseum');
+Route::get('/feedbackMuseumsAndArtworks/ChosenMuseum/feedbackMuseumPage/{museum_id}', [App\Http\Controllers\UserController::class, 'feedbackMuseumPage'])->name('feedbackMuseumPage');
+Route::post('/feedbackMuseumsAndArtworks/ChosenMuseum/feedbackMuseum', [App\Http\Controllers\UserController::class, 'feedbackMuseum'])->name('feedbackMuseum');
+Route::get('/feedbackMuseumsAndArtworks/ChosenMuseum/feedbackArtworkPage/{museum_id}/{artwork_id}', [App\Http\Controllers\UserController::class, 'feedbackArtworkPage'])->name('feedbackArtworkPage');
+Route::post('/feedbackMuseumsAndArtworks/ChosenMuseum/feedbackArtwork', [App\Http\Controllers\UserController::class, 'feedbackArtwork'])->name('feedbackArtwork');
 
 Route::get('/addArtwork', function (){return view('addArtwork');})->name('addArtwork');
 Route::post('/storeArtwork', [App\Http\Controllers\ArtworkController::class, 'store'])->name('storeArtwork');

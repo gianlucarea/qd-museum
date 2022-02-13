@@ -18,8 +18,8 @@ class CreateArtworkReviewsTable extends Migration
             $table->foreignId('artwork_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->text('review_title');
-            $table->text('review_text');
-            $table->float('stars')->default('1');
+            $table->text('review_text')->default('');
+            $table->float('stars');
             $table->timestamp('review_date');
         });
     }
