@@ -109,11 +109,16 @@
                                         @if($ticket_used == True)
                                             <li>
                                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('feedbackMuseumsAndArtworks') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                                    Give a feedback to museum and artworks!
+                                                    Give a feedback to museums and artworks!
                                                 </a>
                                             </li>
                                         @endif
                                     @endisset
+                                    <li>
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('socialArea') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            Go to social area
+                                        </a>
+                                    </li>
                                 @endif
                                 @if(Auth::user()->role == 2)
                                     <li>
