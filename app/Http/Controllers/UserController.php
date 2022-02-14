@@ -72,4 +72,124 @@ class UserController extends Controller
         ]);
     }
 
+    public function feedbackMuseumsAndArtworks(){
+        $user = Auth::user();
+        $museums = DB::table('museums')->join('tickets', 'museums.id', '=', 'tickets.museum_id')->where('tickets.user_id', '=', $user->id)->where('tickets.validated', '=', 1)->select('museums.*')->get();
+        return view('feedbackMuseumsAndArtworks')
+            ->with(['museums' => $museums]);
+    }
+
+    public function feedbackMuseumsAndArtworksChosenMuseum(Request $request){
+        $user = Auth::user();
+        if ($request->museum != null)
+        {
+            $museums = DB::table('museums')->where('id', '=', $request->museum)->get();
+            $rooms = DB::table('rooms')->where('museum_id', '=', $request->museum)->get();
+            $artworks = DB::table('artworks')->get();
+            if(DB::table('museum_reviews')->where('museum_id', '=', $request->museum)->where('user_id', '=', $user->id)->count() > 0){
+                $museum_reviewed = True;
+            }else{
+                $museum_reviewed = False;
+            }
+            $artwork_reviews = DB::table('artwork_reviews')->get();
+            return view('feedbackMuseumsAndArtworksChosenMuseum')
+                ->with(['museums' => $museums])
+                ->with(['rooms' => $rooms])
+                ->with(['artworks' => $artworks])
+                ->with(['museum_reviewed' => $museum_reviewed])
+                ->with(['artwork_reviews' => $artwork_reviews]);
+        } else {
+            $museums = DB::table('museums')->join('tickets', 'museums.id', '=', 'tickets.museum_id')->where('tickets.user_id', '=', $user->id)->where('tickets.validated', '=', 1)->select('museums.*')->get();
+            $message = "you have to choose a museum before go to next page";
+            return view('feedbackMuseumsAndArtworks')
+                ->with(['museums' => $museums])
+                ->with(['message' => $message]);
+        }
+    }
+
+    public function feedbackMuseumPage($museum_id){
+        $museums = DB::table('museums')->where('id', '=', $museum_id)->get();
+        return view('feedbackMuseumPage')
+            ->with(['museums' => $museums]);
+    }
+
+    public function feedbackMuseum(Request $request){
+        $error = 0;
+        $message = "";
+        if ($request->title == null){
+            $error = 1;
+            $message = "You don't have insert title";
+        }
+        if($request->vote == null){ #should be 1 by default, but to be sure just a check
+            if($error == 1){
+                $message = "You don't have insert title and vote";
+            }else{
+                $error = 1;
+                $message = "You don't have insert vote";
+            }
+        }
+        if($error == 1){
+            $museum = DB::table('museums')->where('id', '=', $request->museum)->get();
+            return view('feedbackMuseumPage')
+                ->with(['museums' => $museum])
+                ->with(['message' => $message]);
+        }else{
+            $user = Auth::user();
+            if(DB::table('museum_reviews')->where('museum_id', '=', $request->museum)->where('user_id', '=', $user->id)->count() > 0){  #prevent reload page error
+                return($this->feedbackMuseumsAndArtworksChosenMuseum($request));
+            }else{
+                if($request->description == null){
+                    DB::table('museum_reviews')->insert(['museum_id' => $request->museum, 'user_id' => $user->id, 'review_title' => $request->title, 'stars' => $request->vote]);
+                }else{
+                    DB::table('museum_reviews')->insert(['museum_id' => $request->museum, 'user_id' => $user->id, 'review_title' => $request->title, 'review_text' => $request->description, 'stars' => $request->vote]);
+                }
+                return($this->feedbackMuseumsAndArtworksChosenMuseum($request));
+            }
+        }
+    }
+
+    public function feedbackArtworkPage($museum_id, $artwork_id){
+        $museums = DB::table('museums')->where('id', '=', $museum_id)->get();
+        $artworks = DB::table('artworks')->where('id', '=', $artwork_id)->get();
+        return view('feedbackArtworkPage')
+            ->with(['museums' => $museums])
+            ->with(['artworks' => $artworks]);
+    }
+
+    public function feedbackArtwork(Request $request){
+        $error = 0;
+        $message = "";
+        if ($request->title == null){
+            $error = 1;
+            $message = "You don't have insert title";
+        }
+        if($request->vote == null){ #should be 1 by default, but to be sure just a check
+            if($error == 1){
+                $message = "You don't have insert title and vote";
+            }else{
+                $error = 1;
+                $message = "You don't have insert vote";
+            }
+        }
+        if($error == 1){
+            $museums = DB::table('museums')->where('id', '=', $request->museum)->get();
+            $artworks = DB::table('artworks')->where('id', '=', $request->artwork)->get();
+            return view('feedbackArtworkPage')
+                ->with(['museums' => $museums])
+                ->with(['artworks' => $artworks])
+                ->with(['message' => $message]);
+        }else{
+            $user = Auth::user();
+            if(DB::table('artwork_reviews')->where('artwork_id', '=', $request->artwork)->where('user_id', '=', $user->id)->count() > 0){  #prevent reload page error
+                return($this->feedbackMuseumsAndArtworksChosenMuseum($request));
+            }else{
+                if($request->description == null){
+                    DB::table('artwork_reviews')->insert(['artwork_id' => $request->artwork, 'user_id' => $user->id, 'review_title' => $request->title, 'stars' => $request->vote]);
+                }else{
+                    DB::table('artwork_reviews')->insert(['artwork_id' => $request->artwork, 'user_id' => $user->id, 'review_title' => $request->title, 'review_text' => $request->description, 'stars' => $request->vote]);
+                }
+                return($this->feedbackMuseumsAndArtworksChosenMuseum($request));
+            }
+        }
+    }
 }

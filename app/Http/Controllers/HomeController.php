@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+        $tickets_used = DB::table('tickets')->where('user_id', '=', $user->id)->where('validated', '=', 1)->count();
+        if($tickets_used > 0)
+        {
+            return view('home')
+                ->with(['ticket_used' => True]);
+        }else{
+            return view('home')
+                ->with(['ticket_used' => False]);
+        }
     }
 }

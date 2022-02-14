@@ -5,7 +5,7 @@
                 Return to home
             </a>
         </div>
-        <form method="GET" action="{{ url('/operator/tracking') }}">
+        <form method="GET" action="{{ url('feedbackMuseumsAndArtworks/ChosenMuseum') }}">
             @csrf
             <div class="row" style="margin-bottom: 1%">
                 @foreach($museums as $museum)

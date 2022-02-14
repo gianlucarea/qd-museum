@@ -100,6 +100,15 @@
                                             Tickets
                                         </a>
                                     </li>
+                                    @isset($ticket_used)
+                                        @if($ticket_used == True)
+                                            <li>
+                                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('feedbackMuseumsAndArtworks') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                                    Give a feedback to museum and artworks!
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endisset
                                 @endif
                                 @if(Auth::user()->role == 2)
                                     <li>
