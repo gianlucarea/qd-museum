@@ -37,6 +37,20 @@ class UserController extends Controller
     public function userTracking(Request $request)
     {
         $user = Auth::user();
+        $validation = DB::table('museum_tag_user')
+        ->where('user_id', '=', Auth::user()->id)
+        ->first();
+        if (is_null($validation)){
+            //nessun tag associato
+        }
+        else {
+            //inizio la visita
+        }
+    }
+
+    public function userTrackingUpdate(Request $request) {
+        $user = Auth::user();
+
     }
 
     /**
