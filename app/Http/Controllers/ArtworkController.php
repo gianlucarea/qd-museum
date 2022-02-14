@@ -39,6 +39,21 @@ class ArtworkController extends Controller
         return redirect()->route('showArtworks', ['id' => $museum_id]);
     }
 
+    public function Ajax_getArtworkByMuseum(Request $request){
+        $request->validate([
+            'museum'=>'required',
+        ]);
+        $floor_id = $request->floor;
+        $museum_id = $request->museum;
+        $artworks = DB::table('artworks')->join('rooms', 'artworks.room_id', '=', 'rooms.id')->where('rooms.museum_id', '=', $museum_id)->where('rooms.height', '=', $floor_id)->get();
+        $rooms_list = DB::table('rooms')->where("rooms.museum_id", "=", $museum_id)->where('rooms.height', '=', $floor_id)->get();
+        //$artworks = DB::table('artworks')->where('room_id', '=', $floor_id)->get();
+        return response()->json([
+            'response' => $artworks,
+            'rooms' => $rooms_list,
+        ]);
+    }
+
     public static function store(Request $request){
         $request->validate([
             'title'=>'required',

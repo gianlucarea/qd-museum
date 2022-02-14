@@ -53,3 +53,4 @@ Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'getUse
 Route::get('/chooseMuseumForTracking', [App\Http\Controllers\UserController::class, 'getWorkingMuseum'])->name('getWorkingMuseum');
 Route::get('/operator/tracking', [App\Http\Controllers\UserController::class, 'operatorTracking'])->name('operatorTracking');
 Route::post('/operator/tracking/update', [App\Http\Controllers\UserController::class, 'operatorTrackingUpdate'])->name('operatorTrackingUpdate');
+Route::post('/operator/tracking/art', [App\Http\Controllers\ArtworkController::class, 'Ajax_getArtworkByMuseum'])->name('Ajax_getArtworkByMuseum');

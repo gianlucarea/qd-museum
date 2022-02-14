@@ -50,21 +50,25 @@ class UserController extends Controller
             'museum'=>'required',
         ]);
         $museum_id = $request->museum;
-        return view('operatorTracking')->with(['museum_id' => $museum_id]);
+        $rooms_list = DB::table('rooms')->where("rooms.museum_id", "=", $museum_id)->get();
+        $floors_list = DB::table('rooms')->where("rooms.museum_id", "=", $museum_id)->distinct()->get("height");
+        return view('operatorTracking')->with([
+            'museum_id' => $museum_id, 
+            'floors_list' => $floors_list,
+            'rooms_list' => $rooms_list
+        ]);
     }
 
     public function operatorTrackingUpdate(Request $request) {
-        //$request->validate([
-        //    'museum'=>'required',
-        //]);
-        
+
         $response = Http::post('http://127.0.0.1:5050/userPos', [
             'target' => "ALL",
             'museum' => $request->museum,
+            'floor' => $request->floor,
         ]);
         $data = $response->json();
         return response()->json([
-            'response' => $data
+            'response' => $data,
         ]);
     }
 
