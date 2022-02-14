@@ -192,4 +192,26 @@ class UserController extends Controller
             }
         }
     }
+
+    public function showSocialArea()
+    {
+        $museums = DB::table('museums')->get();
+        $museum_reviews = DB::table('museum_reviews')->join('museums', 'museums.id', '=', 'museum_reviews.museum_id')->join('users', 'users.id', '=', 'museum_reviews.user_id')->select('museum_reviews.*', 'museums.name AS name', 'users.username AS username')->get();
+        $artwork_reviews = DB::table('artwork_reviews')->join('artworks', 'artworks.id', '=', 'artwork_reviews.artwork_id')->join('users', 'users.id', '=', 'artwork_reviews.user_id')->select('artwork_reviews.*', 'artworks.title AS name', 'users.username AS username')->get();
+        $merged_reviews = $museum_reviews->merge($artwork_reviews)->sortByDesc('review_date');
+        return view('socialArea')
+            ->with(['merged_reviews' => $merged_reviews])
+            ->with(['museums' => $museums]);
+    }
+
+    public function showSocialAreaByMuseum($museum_id)
+    {
+        $museums = DB::table('museums')->where('id', '=', $museum_id)->get();
+        $museum_reviews = DB::table('museum_reviews')->join('museums', 'museums.id', '=', 'museum_reviews.museum_id')->join('users', 'users.id', '=', 'museum_reviews.user_id')->where('museum_reviews.museum_id', '=', $museum_id)->select('museum_reviews.*', 'museums.name AS name', 'users.username AS username')->get();
+        $artwork_reviews = DB::table('artwork_reviews')->join('artworks', 'artworks.id', '=', 'artwork_reviews.artwork_id')->join('rooms', 'rooms.id', '=', 'artworks.room_id')->join('museums', 'museums.id', '=', 'rooms.museum_id')->join('users', 'users.id', '=', 'artwork_reviews.user_id')->where('museums.id', '=', $museum_id)->select('artwork_reviews.*', 'artworks.title AS name', 'users.username AS username')->get();
+        $merged_reviews = $museum_reviews->merge($artwork_reviews)->sortByDesc('review_date');
+        return view('socialAreaByMuseum')
+            ->with(['merged_reviews' => $merged_reviews])
+            ->with(['museums' => $museums]);
+    }
 }

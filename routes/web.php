@@ -39,6 +39,8 @@ Route::get('/feedbackMuseumsAndArtworks/ChosenMuseum/feedbackMuseumPage/{museum_
 Route::post('/feedbackMuseumsAndArtworks/ChosenMuseum/feedbackMuseum', [App\Http\Controllers\UserController::class, 'feedbackMuseum'])->name('feedbackMuseum');
 Route::get('/feedbackMuseumsAndArtworks/ChosenMuseum/feedbackArtworkPage/{museum_id}/{artwork_id}', [App\Http\Controllers\UserController::class, 'feedbackArtworkPage'])->name('feedbackArtworkPage');
 Route::post('/feedbackMuseumsAndArtworks/ChosenMuseum/feedbackArtwork', [App\Http\Controllers\UserController::class, 'feedbackArtwork'])->name('feedbackArtwork');
+Route::get('socialArea', [App\Http\Controllers\UserController::class, 'showSocialArea'])->name('socialArea');
+Route::get('socialArea/museum/{museum_id}', [App\Http\Controllers\UserController::class, 'showSocialAreaByMuseum'])->name('socialAreaMuseum');
 
 Route::get('/addArtwork', function (){return view('addArtwork');})->name('addArtwork');
 Route::post('/storeArtwork', [App\Http\Controllers\ArtworkController::class, 'store'])->name('storeArtwork');
