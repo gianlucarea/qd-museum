@@ -56,6 +56,7 @@ Route::get('/timeslot/chooseMuseumToShow', [App\Http\Controllers\Time_Slot_Visit
 Route::get('/museum/slots/show', [App\Http\Controllers\Time_Slot_VisitController::class, 'show_to_delete'])->name('show_to_delete');
 
 Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'getUserInfo'])->name('UserProfile');
+Route::get('/user/visit', [App\Http\Controllers\UserController::class, 'userTracking'])->name('userVisit');
 Route::get('/chooseMuseumForTracking', [App\Http\Controllers\UserController::class, 'getWorkingMuseum'])->name('getWorkingMuseum');
 Route::get('/operator/tracking', [App\Http\Controllers\UserController::class, 'operatorTracking'])->name('operatorTracking');
 Route::post('/operator/tracking/update', [App\Http\Controllers\UserController::class, 'operatorTrackingUpdate'])->name('operatorTrackingUpdate');
