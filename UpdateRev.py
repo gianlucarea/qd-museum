@@ -1,4 +1,3 @@
-from distutils.log import debug
 from flask import Flask, request, jsonify
 import requests
 from queue import Queue
@@ -11,8 +10,8 @@ DataVisitor = {
 "1":{
     "ID":"1",
     "Museum":"1",
-    "PosX":0,
-    "PosY":0,
+    "PosX":100,
+    "PosY":150,
     "Floor":"1",
     "Room":"1",
     "NearArt":[]
