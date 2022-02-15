@@ -18,8 +18,8 @@ class CreateArtworksTable extends Migration
             $table->foreignId('room_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->string('description');
-            $table->int('posx');
-            $table->int('posy');
+            $table->integer('posx');
+            $table->integer('posy');
             });
 
         DB::table('artworks')->insert([

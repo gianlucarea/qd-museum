@@ -66,7 +66,7 @@
                                         <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre href="{{ url('/addArtwork') }}" > Add new Artwork</a>
                                     </li>
                                     <li>
-                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre href="{{ url('/chooseMuseumForRemoveArtwork') }}" > Remove Artwork</a>
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre href="{{ url('/chooseMuseumForRemoveArtwork') }}" > Manage Artwork</a>
                                     </li>
                                     <li>
                                         <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre href="{{ url('/chooseMuseumForTracking') }}" > Visitor Tracker</a>
@@ -138,7 +138,7 @@
                                     </li>
                                     <li>
                                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('/timeslot/chooseMuseumToShow') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            Remove Time Slot
+                                            Manage Time Slot
                                         </a>
                                     </li>
                                 @endif

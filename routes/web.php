@@ -47,6 +47,8 @@ Route::post('/storeArtwork', [App\Http\Controllers\ArtworkController::class, 'st
 Route::get('/museum/artworks/{id}', [App\Http\Controllers\ArtworkController::class, 'show'])->name('showArtworks');
 Route::get('/chooseMuseumForRemoveArtwork', [App\Http\Controllers\ArtworkController::class, 'chooseMuseumForRemoveArtwork'])->name('chooseMuseumForRemoveArtwork');
 Route::get('/museum/showArtworks', [App\Http\Controllers\ArtworkController::class, 'getArtworksByMuseum'])->name('getArtworksByMuseum');
+Route::get('/museum/update/artwork/{id}', [App\Http\Controllers\ArtworkController::class, 'getArtworkToUpdate'])->name('getArtworkToUpdate');
+Route::put('/museum/update/artwork/by/{id}', [App\Http\Controllers\ArtworkController::class, 'update'])->name('artworkUpdate');
 Route::get('/museum/artwork/{id}', [App\Http\Controllers\ArtworkController::class, 'getArtwork'])->name('getArtworks');
 Route::get('/museum/artworks/delete/{id}', [App\Http\Controllers\ArtworkController::class, 'delete'])->name('deleteArtwork');
 Route::get('/museum/slots/{id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'show'])->name('showMuseumTimeSlot');
@@ -56,6 +58,8 @@ Route::post('/museum/storeTimeslot', [App\Http\Controllers\Time_Slot_VisitContro
 Route::get('/timeslot/chooseMuseum', [App\Http\Controllers\Time_Slot_VisitController::class, 'chooseMuseumForRemoveTimeSlot'])->name('timeslot_choose_museum');
 Route::get('/timeslot/chooseMuseumToShow', [App\Http\Controllers\Time_Slot_VisitController::class, 'chooseMuseumToShow'])->name('chooseMuseumToShow');
 Route::get('/museum/slots/show', [App\Http\Controllers\Time_Slot_VisitController::class, 'show_to_delete'])->name('show_to_delete');
+Route::get('/museum/update/slot/{id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'getSlotToUpdate'])->name('getSlotToUpdate');
+Route::put('/museum/update/slot/by/{id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'update'])->name('slotUpdate');
 
 Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'getUserInfo'])->name('UserProfile');
 Route::get('/user/visit', [App\Http\Controllers\UserController::class, 'userTracking'])->name('userVisit');
