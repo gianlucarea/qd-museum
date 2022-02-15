@@ -114,9 +114,7 @@
                             </div></div>");
                     }),
                     $.each(response['response'], function (key, value) {
-                                let x = (Math.random() * 100) + 1;
-                                let y = (Math.random() * 100) + 1;
-                                drawArt("art:"+value.room_id, value.title, x, y);
+                                drawArt("art:"+value.room_id, value.title, value.posx, value.posy);
                             })
                 }
             });
@@ -162,9 +160,7 @@
                 type:'POST',
                 success:  function (response) {
                     $.each(response['response'], function (key, value) {
-                                let x = (Math.random() * 100) + 1;
-                                let y = (Math.random() * 100) + 1;
-                                drawArt("art:"+value.room_id, value.title, x, y);
+                                drawArt("art:"+value.room_id, value.title, value.posx, value.posy);
                             })
                 }
             });
