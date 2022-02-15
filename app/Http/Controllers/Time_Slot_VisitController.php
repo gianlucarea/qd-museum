@@ -63,6 +63,29 @@ class Time_Slot_VisitController extends Controller
             return view('showTimeSlots')->with(compact('time_slots'))->with(compact('museum'));
         }
     }
+
+    public static function update(Request $request, $id){
+        if (Auth::user()->role == 2 || Auth::user()->role == 3 ) {
+            $time_slot = DB::table('time_slots_visit')->where('id','=',$id)->first();
+            if (is_null($time_slot)) {
+                return response()->json(["message" => 'Record not found'], 404);
+            }
+
+            DB::table('time_slots_visit')->where('id','=',$id)->update([
+                
+                    'slot_number'      => $request->input('slot_number'),
+                    'description'      => $request->input('description')
+                
+            ]);
+
+            $museum = Museum::where('id','=',$time_slot->museum_id)->first();
+            $time_slots = DB::table('time_slots_visit')->where('museum_id', '=' , $time_slot->museum_id)->get();
+            return view('showTimeSlots')->with(compact('time_slots'))->with(compact('museum'));
+        } else {
+            return redirect()->back()->with('message','Not Authorized');
+        }
+    }
+
     public function chooseMuseumForRemoveTimeSlot()
     {
         $museums = DB::table('museums')->get();
@@ -74,6 +97,11 @@ class Time_Slot_VisitController extends Controller
     {
         $museums = DB::table('museums')->get();
         return view('timeslot_museum_delete')->with(['museums' => $museums]);
+    }
+
+    public function getSlotToUpdate($id){
+        $slot = DB::table('time_slots_visit')->where('id','=',$id)->first();
+        return view('editTimeSlot')->with(compact('slot'));
     }
 
 }

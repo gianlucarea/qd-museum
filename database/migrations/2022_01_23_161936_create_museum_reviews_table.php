@@ -18,7 +18,7 @@ class CreateMuseumReviewsTable extends Migration
             $table->foreignId('museum_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->text('review_title');
-            $table->text('review_text')->default('');
+            $table->text('review_text');
             $table->float('stars');
             $table->timestamp('review_date');
         });

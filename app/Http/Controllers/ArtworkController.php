@@ -20,6 +20,11 @@ class ArtworkController extends Controller
         return view('showArtworks')->with(compact('artworks'))->with(compact('rooms'));
     }
 
+    public function getArtworkToUpdate($id){
+        $artwork = Artwork::where('id','=',$id)->first();
+        return view('editArtwork')->with(compact('artwork'));
+    }
+
     public function chooseMuseumForRemoveArtwork()
     {
         $museums = DB::table('museums')->get();
@@ -93,12 +98,18 @@ class ArtworkController extends Controller
 
     public static function update(Request $request, $id){
         if (Auth::user()->role == 2 || Auth::user()->role == 3 ) {
-            $Artwork = Artwork::find($id);
-            if (is_null($Artwork)) {
+            $artwork = Artwork::find($id);
+            if (is_null($artwork)) {
                 return response()->json(["message" => 'Record not found'], 404);
             }
-            $Artwork->update($request->all());
-            return redirect()->back()->with('message','Updated');
+            $artwork->title = $request->input('title');
+            $artwork->description = $request->input('description');
+            $artwork->room_id = $request->input('room_id');
+            $artwork->update();
+
+            $room = Room::where('id','=', $request->room_id)->first();
+            $museum_id = $room->museum_id;
+            return redirect()->route('showArtworks', ['id' => $museum_id]);
         } else {
             return redirect()->back()->with('message','Not Authorized');
         }
