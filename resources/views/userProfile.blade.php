@@ -20,6 +20,9 @@
                 <li>Mail : {{ Auth::user()->email }}</li>
             </ul>
         </div>
+        <div class="content">
+            <!--Spazione per i percorsi guidati -->
+        </div>
     </div>
 </body>
 </html>

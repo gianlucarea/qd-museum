@@ -45,12 +45,35 @@ class UserController extends Controller
         }
         else {
             //inizio la visita
+            $museum_id = DB::table('museum_tags')->where('id', '=', $validation->museum_tag_id)->first('museum_id');
+            $response = Http::post('http://127.0.0.1:5050/userPos', [
+                'target' => $user->id,
+            ]);
+            $data = $response->json();
+            $rooms_list = DB::table('rooms')->where("rooms.museum_id", "=", $museum_id->museum_id)->where('rooms.height', '=', strval($data['Floor']))->get();
+            $artworks_list = DB::table('artworks')->whereIn("id", $data['NearArt'])->get();
+            return view('userTracking')->with([
+                'museum_id' => $museum_id->museum_id,
+                'response' => $data,
+                'rooms_list' => $rooms_list,
+                'artworks_list' => $artworks_list
+            ]);
         }
     }
 
     public function userTrackingUpdate(Request $request) {
         $user = Auth::user();
-
+        $response = Http::post('http://127.0.0.1:5050/userPos', [
+            'target' => $user->id,
+        ]);
+        $data = $response->json();
+        $rooms_list = DB::table('rooms')->where("rooms.museum_id", "=", $request->museum_id)->where('rooms.height', '=', strval($data['Floor']))->get();
+        $artworks_list = DB::table('artworks')->whereIn("id", $data['NearArt'])->get();
+        return response()->json([
+            'response' => $data,
+            'rooms_list' => $rooms_list,
+            'artworks_list' => $artworks_list
+        ]);
     }
 
     /**

@@ -101,7 +101,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('userVisit') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('user/visit') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                             Visit
                                         </a>
                                     </li>
