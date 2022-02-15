@@ -4,8 +4,8 @@
         Return to Home
     </a>
     <br>
-    <a>
-        <a href="/addArtwork" class="btn btn-danger"> Add new Artwork</a>
+    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('/timeslot/chooseMuseum') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+        Add Time Slot 
     </a>
 </div>
     <div >

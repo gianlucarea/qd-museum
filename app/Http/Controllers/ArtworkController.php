@@ -6,6 +6,7 @@ use App\Models\Museum;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use App\Models\Artwork;
+use App\Models\Museum_Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -33,7 +34,8 @@ class ArtworkController extends Controller
 
     public function getArtwork($id){
         $artwork = Artwork::where('id','=',$id)->first();
-        return view('showArtwork')->with(compact('artwork'));
+        $stars =  DB::table('artwork_reviews')->where('artwork_id','=',$id)->avg('stars');
+        return view('showArtwork')->with(compact('artwork'))->with(compact('stars'));
     }
 
     public function getArtworksByMuseum(Request $request){
