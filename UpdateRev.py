@@ -1,4 +1,3 @@
-from distutils.log import debug
 from flask import Flask, request, jsonify
 import requests
 from queue import Queue
