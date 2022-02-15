@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Visit_Route;
 use Illuminate\Http\Request;
 use Response;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,7 @@ class UserController extends Controller
     public function getUserInfo(Request $request)
     {   
         $user = Auth::user();
+        $
         return view('userProfile', $user);
     }
 
