@@ -22,9 +22,9 @@ class CreateRoomsTable extends Migration
         });
 
         DB::table('rooms')->insert([
-            ['museum_id' => '1' , 'height' => '5','width'=>'50','length'=>'50' ],
-            ['museum_id' => '1' , 'height' => '6','width'=>'50','length'=>'50' ],
-            ['museum_id' => '1' , 'height' => '7','width'=>'50','length'=>'50' ],
+            ['museum_id' => '1' , 'height' => '1','width'=>'300','length'=>'300' ],
+            ['museum_id' => '1' , 'height' => '1','width'=>'300','length'=>'300' ],
+            ['museum_id' => '1' , 'height' => '2','width'=>'300','length'=>'300' ],
             ['museum_id' => '2' , 'height' => '5','width'=>'50','length'=>'50' ],
             ['museum_id' => '2' , 'height' => '5','width'=>'50','length'=>'50' ],
             ['museum_id' => '2' , 'height' => '5','width'=>'50','length'=>'50' ],

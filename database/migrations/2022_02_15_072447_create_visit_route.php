@@ -18,6 +18,7 @@ class CreateVisitRoute extends Migration
             $table->foreignId('museum_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->string('artwork_list');
+            $table->string('descrizione');
         });
     }
 

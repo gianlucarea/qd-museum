@@ -17,7 +17,8 @@ class Visit_Route extends Model
     protected $fillable = [
         'user_id',
         'museum_id',
-        'artwork_list'
+        'artwork_list',
+        'descrizione'
     ];
 
     /**

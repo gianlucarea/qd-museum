@@ -28,7 +28,7 @@ class Visit_RouteController extends Controller
     public function getVRoutesByUser(Request $request) {
         $user = Auth::user();
         $VRoutes_list = DB::table('visit_route')->where('user_id', '=', $user->id)->get();
-
+        //response on view
     }
 
     //Add a new Visit Route on DB
