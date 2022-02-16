@@ -197,8 +197,6 @@ def Main():
                                 dict_artwork[art]["Visitor"] = dict_artwork[art]["Visitor"] + 1
                             else:
                                 dict_artwork[art] = {"Time": time.time(), "Visitor": 1}
-
-            print("---------------------------------")
             
             # if there is at least one art near the visitor, the movement is slowed
             if len(DataVisitor[target]["NearArt"]) > 0:

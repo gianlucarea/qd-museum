@@ -29,15 +29,17 @@
                        @else
                            <p>Seems that nobody has given attention on this artwork</p>
                        @endif
-                       <a href="/museum/update/artwork/{{$artwork->id}}">Update</a>
-                       <br>
-                       <a href="/museum/artworks/delete/{{$artwork->id}}" class="btn btn-danger" onclick="
-                             var result = confirm('Are you sure you want to delete this record?');
-                             if(!result){
-                                event.preventDefault();
-                                document.getElementById('delete-form').submit();}">
-                           Delete
-                       </a>
+                       @if(Auth::user()->role == 2 || Auth::user()->role == 3)
+                           <a href="/museum/update/artwork/{{$artwork->id}}">Update</a>
+                           <br>
+                           <a href="/museum/artworks/delete/{{$artwork->id}}" class="btn btn-danger" onclick="
+                                 var result = confirm('Are you sure you want to delete this record?');
+                                 if(!result){
+                                    event.preventDefault();
+                                    document.getElementById('delete-form').submit();}">
+                               Delete
+                           </a>
+                       @endif
                    </div>
                 </li>
             </ul>
