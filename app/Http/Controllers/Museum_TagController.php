@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class Museum_TagController extends Controller
 {
@@ -24,6 +25,11 @@ class Museum_TagController extends Controller
                 ->with(['message' => $message]);
         } else {
             $tag_id = $request->tag_id;
+            $target = DB::table('museum_tag_user')->where('museum_tag_id', '=', $tag_id)->get()->first();
+            $response = Http::post('http://127.0.0.1:5050/userMngt', [
+                'target' => $target->user_id,
+                'operation' => "untrack"
+            ]);
             DB::table('museum_tag_user')->where('museum_tag_id', '=', $tag_id)->delete();
             DB::table('museum_tags')->where('id', '=', $tag_id)->update(['available' => 1]);
             return view('tagDecouplingOutcome');

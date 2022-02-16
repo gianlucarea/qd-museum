@@ -251,4 +251,20 @@ class UserController extends Controller
             ->with(['merged_reviews' => $merged_reviews])
             ->with(['museums' => $museums]);
     }
+
+    public function reg_visit_time(Request $request)
+    {
+        $row = DB::table('museums')->where('id', '=', $request->museum)->get()->first();
+        $total_time = $row->total_time + $request->time;
+        $total_visit = $row->total_visit + 1;
+        DB::table('museums')->where('id', '=', $request->museum)->update(['total_time' => $total_time, 'total_visit' => $total_visit]);
+    }
+
+    public function reg_art_visit(Request $request)
+    {
+        $row = DB::table('artworks')->where('id', '=', $request->artwork)->get()->first();
+        $total_time = $row->total_time + $request->time;
+        $total_visit = $row->total_visit + 1;
+        DB::table('artworks')->where('id', '=', $request->artwork)->update(['total_time' => $total_time, 'total_visit' => $total_visit]);
+    }
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Input\Input;
 use Illuminate\Support\Str;
 use Auth;
+use Illuminate\Support\Facades\Http;
 
 class TicketController extends Controller
 {
@@ -231,6 +232,7 @@ class TicketController extends Controller
 
     public function validation($museum_id, $tag_id, $ticket_id, $user_id)
     {
+        error_log("DEBUG-1");
         $ticket = DB::table('tickets')->where('id', '=', $ticket_id)->get()->first();
         $tag = DB::table('museum_tags')->where('id', '=', $tag_id)->get()->first();
         $success = 1;
@@ -245,9 +247,20 @@ class TicketController extends Controller
                     $visit_date = Carbon::createFromFormat('Y-m-d', $ticket->visit_date)->toDateString();
                     if ($now == $visit_date)
                     {
+                        error_log("DEBUG0");
+                        //make new user
+                        $response = Http::post('http://127.0.0.1:5050/userMngt', [
+                            'operation' => 'track',
+                            'target' => $user_id,
+                            'museum' => $museum_id
+                        ]);
+                        error_log("DEBUG1");
                         DB::table('tickets')->where('id', '=', $ticket_id)->update(['validated' => 1]);
+                        error_log("DEBUG2");
                         DB::table('museum_tags')->where('id', '=', $tag_id)->update(['available' => 0]);
+                        error_log("DEBUG3");
                         DB::table('museum_tag_user')->insert(['museum_tag_id' => $tag_id, 'user_id' => $user_id, 'piano' => '0', 'posX' => '0', 'posY' => '0']);
+                        error_log("DEBUG4");
                     } else {
                         $success = 0;
                         $description = "the visit date of the ticket is not today";

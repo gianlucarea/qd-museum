@@ -60,6 +60,8 @@ Route::get('/timeslot/chooseMuseumToShow', [App\Http\Controllers\Time_Slot_Visit
 Route::get('/museum/slots/show', [App\Http\Controllers\Time_Slot_VisitController::class, 'show_to_delete'])->name('show_to_delete');
 Route::get('/museum/update/slot/{id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'getSlotToUpdate'])->name('getSlotToUpdate');
 Route::put('/museum/update/slot/by/{id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'update'])->name('slotUpdate');
+Route::post('/museum/reg_visit', [App\Http\Controllers\UserController::class, 'reg_visit_time'])->name('reg_visit_time');
+Route::post('/museum/reg_art_visit', [App\Http\Controllers\UserController::class, 'reg_art_visit'])->name('reg_art_visit');
 
 Route::get('/user/profile', [App\Http\Controllers\UserController::class, 'getUserInfo'])->name('UserProfile');
 Route::get('/user/visit', [App\Http\Controllers\UserController::class, 'userTracking'])->name('userVisit');

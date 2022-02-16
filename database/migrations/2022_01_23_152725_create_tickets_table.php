@@ -31,7 +31,7 @@ class CreateTicketsTable extends Migration
             ['museum_id' => 2, 'user_id' => 8, 'visit_date' => date('2022/03/11'), 'time_slot_number' => 2, 'validated' => 0],
             ['museum_id' => 3, 'user_id' => 7, 'visit_date' => date('2022/03/12'), 'time_slot_number' => 1, 'validated' => 0],
             ['museum_id' => 3, 'user_id' => 8, 'visit_date' => date('2022/03/12'), 'time_slot_number' => 2, 'validated' => 0],
-            ['museum_id' => 1, 'user_id' => 9, 'visit_date' => Carbon::tomorrow()->toDateString(), 'time_slot_number' => 2, 'validated' => 0],
+            ['museum_id' => 1, 'user_id' => 9, 'visit_date' => Carbon::today()->toDateString(), 'time_slot_number' => 2, 'validated' => 0],
             ['museum_id' => 3, 'user_id' => 9, 'visit_date' => date('2021/01/31'), 'time_slot_number' => 1, 'validated' => 1],
             ['museum_id' => 2, 'user_id' => 9, 'visit_date' => date('2022/02/07'), 'time_slot_number' => 2, 'validated' => 0]
         ]);
