@@ -96,30 +96,39 @@ Model used
     +SizeY [INT]
     +Floors [INT]
 '''
-##DATA CRUD
+
+# DATA CRUD
+
+
 def AddArtwork (art_id, museum_id, posX, posY, fl):
     global DataArtwork
     DataArtwork[art_id] = {"ID":art_id, "Museum":museum_id, "PosX":posX, "PosY":posY, "Floor":fl}
+
 
 def RemoveArtwork (art_id):
     global DataArtwork
     DataArtwork.pop(art_id)
 
+
 def AddMuseum (museum_id, s_x, s_y, st_x, st_y, fl):
     global DataMuseum
     DataMuseum[museum_id] = {"ID":museum_id, "SizeX":s_x, "SizeY":s_y, "StartX":st_x, "StartY":st_y, "Floors":fl }
+
 
 def RemoveMuseum (museum_id):
     global DataMuseum
     DataMuseum.pop(museum_id)
 
+
 def AddVisitor (user_id, museum_id, start_time):
     global DataVisitor
     DataVisitor[user_id] = {"ID":user_id, "Museum":museum_id, "PosX":DataMuseum[museum_id].get("StartX"), "PosY":DataMuseum[museum_id].get("StartY"), "Floor":"1", "Room":"1", "NearArt":[], "start_time": start_time}
 
+
 def RemoveVisitor (user_id):
     global DataVisitor
     DataVisitor.pop(user_id)
+
 
 def Distance(x, y):
     if x >= y:
@@ -128,12 +137,13 @@ def Distance(x, y):
         result = y - x
     return result
 
+
 def Main():
     global DataVisitor, DataArtwork, DataMuseum, ExitFlag, q
     random.seed(datetime.datetime.now())
     dict_artwork = {}
     while ExitFlag:
-        ##CORE PART [CYCLED]
+        # CORE PART [CYCLED]
         try:
             while not q.empty():
                 data = q.get().split("|")
@@ -147,11 +157,11 @@ def Main():
                     print(response)
                     RemoveVisitor(data[1])
         except:
-            print ("No data received")
+            print("No data received")
 
 
         for target in DataVisitor:
-            #check if previous art near the visitor is still there
+            # check if previous art near the visitor is still there
             if len(DataVisitor[target]["NearArt"]) > 0:
                 for art in DataVisitor[target]["NearArt"]:
                     if DataArtwork[art]["Museum"] == DataVisitor[target]["Museum"] and DataArtwork[art]["Floor"] == DataVisitor[target]["Floor"] and DataArtwork[art]["Room"] == DataVisitor[target]["Room"]:
@@ -162,7 +172,7 @@ def Main():
                                 dict_artwork[art]["Visitor"] = dict_artwork[art]["Visitor"] - 1
                             else:
                                 param = {'time': time.time() - dict_artwork[art]['Time'], 'artwork': art}
-                                response =  requests.post(url="http://127.0.0.1:8000/museum/reg_art_visit", data=param)
+                                response = requests.post(url="http://127.0.0.1:8000/museum/reg_art_visit", data=param)
                                 dict_artwork.pop(art, None)
                     else:
                         print("Prova3")
@@ -174,16 +184,16 @@ def Main():
                             response = requests.post(url="http://127.0.0.1:8000/museum/reg_art_visit", data=param)
                             dict_artwork.pop(art, None)
 
-            #check if there is new art near the visitor
+            # check if there is new art near the visitor
             for art in DataArtwork:
                 if DataArtwork[art]["Museum"] == DataVisitor[target]["Museum"] and DataArtwork[art]["Floor"] == DataVisitor[target]["Floor"] and DataArtwork[art]["Room"] == DataVisitor[target]["Room"]:
                     if Distance(DataArtwork[art]["PosX"], DataVisitor[target]["PosX"]) <= 40 and Distance(DataArtwork[art]["PosY"], DataVisitor[target]["PosY"]) <= 40:
-                        print (art)
-                        print (DataVisitor[target]["NearArt"])
+                        print(art)
+                        print(DataVisitor[target]["NearArt"])
                         if not(art in DataVisitor[target]["NearArt"]):
                             print("Test4")
                             DataVisitor[target]["NearArt"].append(art)
-                            print (DataVisitor[target]["NearArt"])
+                            print(DataVisitor[target]["NearArt"])
                             if (art in dict_artwork):
                                 dict_artwork[art]["Visitor"] = dict_artwork[art]["Visitor"] + 1
                             else:
@@ -191,16 +201,16 @@ def Main():
 
             print("---------------------------------")
             
-            #if there is at least one art near the visitor, the movement is slowed
+            # if there is at least one art near the visitor, the movement is slowed
             if len(DataVisitor[target]["NearArt"]) > 0:
                 movSpd = 15
             else:
                 movSpd = 15
 
-            #make the visitor's movement
+            # make the visitor's movement
             targetMoved = False
             MuseumID = DataVisitor[target]["Museum"]
-            direction = random.randint(0,3)
+            direction = random.randint(0, 3)
             while not targetMoved:
                 if direction == 0:
                     if DataMuseum[MuseumID]["SizeXmax"] >= DataVisitor[target]["PosX"] + movSpd:
@@ -220,33 +230,35 @@ def Main():
                         targetMoved = True
                 direction = (direction + 1) % 4
             
-            direction = random.randint(0,100)
+            direction = random.randint(0, 100)
             if direction > 80:
                 DataVisitor[target]["Room"] = str((int(DataVisitor[target]["Room"]) + 1) % 3)
                 if DataVisitor[target]["Room"] == "0":
                     DataVisitor[target]["Room"] = "1"
             
 
-        ##print("-------------------------------------------------------")
+        # print("-------------------------------------------------------")
         time.sleep(1)
 
 app = Flask(__name__)
 q = Queue()
 locService = Thread(target = Main)
 ExitFlag = True
-  
+
+
 @app.route('/userMngtPostman', methods=['POST'])
 def visitorManagerPost():
-    ##Check the request and do on MainFrame
+    # Check the request and do on MainFrame
     req_opr = request.form.get('operation')
     req_trg = request.form.get('target')
     req_mus = request.form.get('museum')
     q.put(req_opr + "|" + req_trg + "|" + req_mus)
     return "Visitor Tracked"
 
+
 @app.route('/userMngt', methods=['POST'])
 def visitorManager():
-    ##Check the request and do on MainFram
+    # Check the request and do on MainFram
     req_opr = request.json['operation']
     req_trg = str(request.json['target'])
     if req_opr == "track":
@@ -257,11 +269,12 @@ def visitorManager():
         q.put(req_opr + "|" + req_trg)
     return "Visitor Tracked"
 
+
 @app.route('/userPos', methods=['POST'])
 def visitorPosition():
     global DataVisitor
     DataCollection = []
-    ##Check the request and do on MainFrame
+    # Check the request and do on MainFrame
     req_target = request.json['target']
     print (req_target)
     print (DataVisitor)
@@ -275,6 +288,7 @@ def visitorPosition():
         DataCollection = DataVisitor[str(req_target)]
     return jsonify(DataCollection)
 
+
 @app.route('/start', methods=['GET'])
 def StartService():
     global locService, ExitFlag
@@ -282,6 +296,7 @@ def StartService():
     locService = Thread(target = Main)
     locService.start()
     return "Service Started"
+
 
 @app.route('/stop', methods=['GET'])
 def StopService():
