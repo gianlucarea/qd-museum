@@ -4,9 +4,11 @@
             Return to Home
         </a>
         <br>
-        <a class="navbar-brand" href="{{ url('/museum/showArtworks/'.$museum->id) }}">
-            Return to artworks management and statistics
-        </a>
+        @if(Auth::user()->role == 2 || Auth::user()->role == 3)
+            <a class="navbar-brand" href="{{ url('/museum/showArtworks/'.$museum->id) }}">
+                Return to artworks management and statistics
+            </a>
+        @endif
     </div>
     <div>
         <div class="container" style=" display: flex; flex-direction: row; width:100%">

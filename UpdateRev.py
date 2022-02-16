@@ -200,9 +200,9 @@ def Main():
             
             # if there is at least one art near the visitor, the movement is slowed
             if len(DataVisitor[target]["NearArt"]) > 0:
-                movSpd = 10
-            else:
                 movSpd = 5
+            else:
+                movSpd = 3
 
             # make the visitor's movement
             targetMoved = False
