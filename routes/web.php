@@ -42,22 +42,24 @@ Route::post('/feedbackMuseumsAndArtworks/ChosenMuseum/feedbackArtwork', [App\Htt
 Route::get('socialArea', [App\Http\Controllers\UserController::class, 'showSocialArea'])->name('socialArea');
 Route::get('socialArea/museum/{museum_id}', [App\Http\Controllers\UserController::class, 'showSocialAreaByMuseum'])->name('socialAreaMuseum');
 
-Route::get('/addArtwork', function (){return view('addArtwork');})->name('addArtwork');
+Route::get('/addArtwork/{museum_id}', [App\Http\Controllers\ArtworkController::class, 'showAddArtworkPage'])->name('addArtwork');
 Route::post('/storeArtwork', [App\Http\Controllers\ArtworkController::class, 'store'])->name('storeArtwork');
 Route::get('/museum/artworks/{id}', [App\Http\Controllers\ArtworkController::class, 'show'])->name('showArtworks');
-Route::get('/chooseMuseumForRemoveArtwork', [App\Http\Controllers\ArtworkController::class, 'chooseMuseumForRemoveArtwork'])->name('chooseMuseumForRemoveArtwork');
+Route::get('/chooseMuseumForArtworkAndManagement', [App\Http\Controllers\ArtworkController::class, 'chooseMuseumForArtworkAndManagement'])->name('chooseMuseumForArtworkAndManagement');
 Route::get('/museum/showArtworks', [App\Http\Controllers\ArtworkController::class, 'getArtworksByMuseum'])->name('getArtworksByMuseum');
+Route::get('/museum/showArtworks/{museum_id}', [App\Http\Controllers\ArtworkController::class, 'getArtworksByMuseum2'])->name('getArtworksByMuseum2');
 Route::get('/museum/update/artwork/{id}', [App\Http\Controllers\ArtworkController::class, 'getArtworkToUpdate'])->name('getArtworkToUpdate');
 Route::put('/museum/update/artwork/by/{id}', [App\Http\Controllers\ArtworkController::class, 'update'])->name('artworkUpdate');
 Route::get('/museum/artwork/{id}', [App\Http\Controllers\ArtworkController::class, 'getArtwork'])->name('getArtworks');
 Route::get('/museum/artworks/delete/{id}', [App\Http\Controllers\ArtworkController::class, 'delete'])->name('deleteArtwork');
 Route::get('/museum/slots/{id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'show'])->name('showMuseumTimeSlot');
 Route::get('/museum/slot/delete/{id}',[App\Http\Controllers\Time_Slot_VisitController::class, 'delete'])->name('deleteTimeSlot');
-Route::get('/museum/addTimeslot/',function(){return view('addTimeSlot');})->name('addTimeSlot');
+Route::get('/museum/addTimeslot/{museum_id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'showAddTimeSlotPage'])->name('showAddTimeSlotPage');
 Route::post('/museum/storeTimeslot', [App\Http\Controllers\Time_Slot_VisitController::class, 'store'])->name('storeTimeslot');
 Route::get('/timeslot/chooseMuseum', [App\Http\Controllers\Time_Slot_VisitController::class, 'chooseMuseumForRemoveTimeSlot'])->name('timeslot_choose_museum');
 Route::get('/timeslot/chooseMuseumToShow', [App\Http\Controllers\Time_Slot_VisitController::class, 'chooseMuseumToShow'])->name('chooseMuseumToShow');
-Route::get('/museum/slots/show', [App\Http\Controllers\Time_Slot_VisitController::class, 'show_to_delete'])->name('show_to_delete');
+Route::get('/museum/showSlots', [App\Http\Controllers\Time_Slot_VisitController::class, 'show_time_slots_by_museum'])->name('show_time_slots_by_museum');
+Route::get('/museum/showSlots/{museum_id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'show_time_slots_by_museum2'])->name('show_time_slots_by_museum2');
 Route::get('/museum/update/slot/{id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'getSlotToUpdate'])->name('getSlotToUpdate');
 Route::put('/museum/update/slot/by/{id}', [App\Http\Controllers\Time_Slot_VisitController::class, 'update'])->name('slotUpdate');
 Route::post('/museum/reg_visit', [App\Http\Controllers\UserController::class, 'reg_visit_time'])->name('reg_visit_time');

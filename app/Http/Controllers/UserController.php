@@ -21,6 +21,7 @@ class UserController extends Controller
     public function getUserInfo(Request $request)
     {   
         $user = Auth::user();
+        return view("userProfile")->with(['user' => $user]);
     }
 
     public function getWorkingMuseum(Request $request)

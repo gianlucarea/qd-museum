@@ -3,6 +3,11 @@
     <a class="navbar-brand" href="{{ url('/home') }}">
         Return to Home
     </a>
+    <div class="row">
+        <a class="navbar-brand" href="{{ url('/museum/showSlots/'.$museum->id) }}">
+            Return to time slots management
+        </a>
+    </div>
     <div class="row justify-content-center" style="margin-top: 1%">
         <div class="col-md-8">
             <div class="card">
@@ -14,7 +19,7 @@
                             <input type="text" id="slot_number" name="slot_number">
                         </div>
                         <div class="row" style="margin-bottom: 1%">
-                            <input type="text" id="museum_id" name="museum_id" hidden value="{{request()->museum}}">
+                            <input type="text" id="museum_id" name="museum_id" hidden value="{{$museum->id}}">
                         </div>
                         <div class="row" style="margin-bottom: 1%">
                             <label for="description">Description:</label>

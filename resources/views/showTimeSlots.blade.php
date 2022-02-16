@@ -4,7 +4,7 @@
         Return to Home
     </a>
     <br>
-    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('/timeslot/chooseMuseum') }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('/museum/addTimeslot/'.$museum->id) }}" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
         Add Time Slot 
     </a>
 </div>
@@ -18,9 +18,9 @@
                        <div class="Artwork" style="padding: 2px 16px; width:80%">
                            <p>{{$time_slot->slot_number}}</p>
                            <p>{{$time_slot->description}}</p>
-                           <a href="/museum/update/slot/{{$time_slot->id}}">Update</a>
+                           <a href="{{url('/museum/update/slot/'.$time_slot->id)}}">Update</a>
                             <br>
-                           <a href="/museum/slot/delete/{{$time_slot->id}}" class="btn btn-danger" onclick="
+                           <a href="{{url('/museum/slot/delete/'.$time_slot->id)}}" class="btn btn-danger" onclick="
                                  var result = confirm('Are you sure you want to delete this record?');
                                  if(!result){
                                     event.preventDefault();

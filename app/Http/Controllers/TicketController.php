@@ -254,13 +254,9 @@ class TicketController extends Controller
                             'target' => $user_id,
                             'museum' => $museum_id
                         ]);
-                        error_log("DEBUG1");
                         DB::table('tickets')->where('id', '=', $ticket_id)->update(['validated' => 1]);
-                        error_log("DEBUG2");
                         DB::table('museum_tags')->where('id', '=', $tag_id)->update(['available' => 0]);
-                        error_log("DEBUG3");
                         DB::table('museum_tag_user')->insert(['museum_tag_id' => $tag_id, 'user_id' => $user_id, 'piano' => '0', 'posX' => '0', 'posY' => '0']);
-                        error_log("DEBUG4");
                     } else {
                         $success = 0;
                         $description = "the visit date of the ticket is not today";

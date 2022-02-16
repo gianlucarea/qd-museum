@@ -5,7 +5,7 @@
             Return to home
         </a>
     </div>
-    <form method="GET" action="{{ url('/museum/slots/show/') }}"
+    <form method="GET" action="{{ url('/museum/showSlots') }}"
     @csrf
     <div class="row">
         @foreach($museums as $museum)

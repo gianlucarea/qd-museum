@@ -7,7 +7,7 @@
     </div>
     <form method="GET" action="{{ url('/museum/showArtworks') }}"
     @csrf
-    <div class="row">
+    <div class="row" style="margin-bottom: 1%">
         @foreach($museums as $museum)
             <input type="radio" id="{{ $museum->id }}" name="museum" value="{{ $museum->id }}">
             <label for="{{ $museum->id }}"> {{ $museum->name }} </label><br>
@@ -18,9 +18,9 @@
             <p><b>WARNING</b>: {{$message}}</p>
         </div>
     @endisset
-    <div class="row">
+    <div class="row" style="margin-bottom: 1%">
         <button type="submit">
-            go to remove artwork by museum
+            go to artwork management and statistics
         </button>
     </div>
 </div>
