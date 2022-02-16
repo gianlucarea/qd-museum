@@ -130,10 +130,7 @@
                     if(response['artworks_list'] !== undefined)
                         $.each(response['artworks_list'], function (key, value) {
                             //Carico le opere sulla tabella
-                            $('#artTable').append("<tr>\
-                                    <td>"+value.title+"</td>\
-                                    <td><a class='nav-link dropdown-toggle' href='{{ url('museum/artwork/"+ value.ID +"') }}'>INFO</a></td>\
-                                    </tr>");
+                            $('#artTable').append("<tr><td>"+value.title+"</td><td><a class='nav-link dropdown-toggle' href='/museum/artwork/" + value.id + "'>INFO</a></td></tr>");
                         })
                     //check if exist map with room index, otherwise reloading the floor
                     var myEle = document.getElementById("map:"+response['response'].Room);

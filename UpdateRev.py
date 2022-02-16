@@ -12,29 +12,29 @@ DataVisitor = {
 DataMuseum = {
 "1":{
     "ID":"1",
-    "SizeXmax":100,
-    "SizeYmax":100,
+    "SizeXmax":300,
+    "SizeYmax":300,
     "SizeXmin":0,
     "SizeYmin":0,
     "Floors":1,
-    "StartX":20,
-    "StartY":20
+    "StartX":100,
+    "StartY":150
 }
 }
 DataArtwork = {
 "1":{
     "ID":"1",
     "Museum":"1",
-    "PosX":20,
-    "PosY":20,
+    "PosX":100,
+    "PosY":150,
     "Floor":"1",
     "Room":"1"
 },
 "2":{
     "ID":"2",
     "Museum":"1",
-    "PosX":40,
-    "PosY":40,
+    "PosX":90,
+    "PosY":90,
     "Floor":"1",
     "Room":"1"
 },
@@ -42,8 +42,8 @@ DataArtwork = {
 {
     "ID":"3",
     "Museum":"1",
-    "PosX":60,
-    "PosY":60,
+    "PosX":30,
+    "PosY":120,
     "Floor":"1",
     "Room":"1"
 },
@@ -166,7 +166,6 @@ def Main():
                 for art in DataVisitor[target]["NearArt"]:
                     if DataArtwork[art]["Museum"] == DataVisitor[target]["Museum"] and DataArtwork[art]["Floor"] == DataVisitor[target]["Floor"] and DataArtwork[art]["Room"] == DataVisitor[target]["Room"]:
                         if Distance(DataArtwork[art]["PosX"], DataVisitor[target]["PosX"]) >= 40 or Distance(DataArtwork[art]["PosY"], DataVisitor[target]["PosY"]) >= 40:
-                            print("Prova3")
                             DataVisitor[target]["NearArt"].remove(art)
                             if dict_artwork[art]["Visitor"] > 2:
                                 dict_artwork[art]["Visitor"] = dict_artwork[art]["Visitor"] - 1
@@ -203,9 +202,9 @@ def Main():
             
             # if there is at least one art near the visitor, the movement is slowed
             if len(DataVisitor[target]["NearArt"]) > 0:
-                movSpd = 15
+                movSpd = 10
             else:
-                movSpd = 15
+                movSpd = 5
 
             # make the visitor's movement
             targetMoved = False
@@ -231,7 +230,7 @@ def Main():
                 direction = (direction + 1) % 4
             
             direction = random.randint(0, 100)
-            if direction > 80:
+            if direction > 99:
                 DataVisitor[target]["Room"] = str((int(DataVisitor[target]["Room"]) + 1) % 3)
                 if DataVisitor[target]["Room"] == "0":
                     DataVisitor[target]["Room"] = "1"

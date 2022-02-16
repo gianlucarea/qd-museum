@@ -55,7 +55,7 @@ class ArtworkController extends Controller
     }
 
     public function getArtwork($id){
-        $artwork = Artwork::where('id','=',$id)->first();
+        $artwork = Artwork::where('id','=',$id)->get()->first();
         $museum = DB::table('rooms')->join('museums', 'rooms.museum_id', '=', 'museums.id')->where('rooms.id', '=', $artwork->room_id)->get()->first();
         $stars =  DB::table('artwork_reviews')->where('artwork_id','=',$id)->avg('stars');
         if($artwork->total_visit != 0){
